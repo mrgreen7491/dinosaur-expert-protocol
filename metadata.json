@@ -1,0 +1,6 @@
+{
+  "name": "Dinosaur English Quiz",
+  "description": "恐竜と古生物が大好きな子供向けの、英語で秘密を解き明かすクイズ＆コレクションアプリ。",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
