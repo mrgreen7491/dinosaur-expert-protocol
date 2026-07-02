@@ -5,6 +5,7 @@ import {defineConfig} from 'vite';
 
 export default defineConfig(() => {
   return {
+    base: '/dinosaur-expert-protocol/',
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
