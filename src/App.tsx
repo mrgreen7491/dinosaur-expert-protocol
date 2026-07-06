@@ -843,7 +843,7 @@ export default function App() {
   };
 
   // Diagnostic Stats helpers
-  const progressPercent = Math.round((unlockedDinoIds.length / Object.keys(DINOSAURS).length) * 100);
+  const progressPercent = Math.round((unlockedDinoIds.length / 50) * 100);
 
   return (
     <div className="min-h-screen bg-[#06090e] text-slate-100 font-sans relative crt-scanlines flex flex-col selection:bg-emerald-500 selection:text-black">
@@ -1276,7 +1276,7 @@ export default function App() {
             <div className="grid grid-cols-2 gap-3 font-mono">
               <div className="bg-slate-950/60 border border-emerald-950/40 p-2.5 rounded flex flex-col gap-0.5 text-center">
                 <span className="text-[10px] text-slate-500">DECRYPTED_CARDS</span>
-                <span className="text-lg font-bold text-emerald-400">{unlockedDinoIds.length} / 10</span>
+                <span className="text-lg font-bold text-emerald-400">{unlockedDinoIds.length} / 50</span>
               </div>
               <div className="bg-slate-950/60 border border-emerald-950/40 p-2.5 rounded flex flex-col gap-0.5 text-center">
                 <span className="text-[10px] text-slate-500">DECRYPT_RATE</span>
