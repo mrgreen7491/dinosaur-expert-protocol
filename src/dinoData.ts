@@ -220,7 +220,7 @@ const RAW_DINOS: RawDinoDef[] = [
     length: '約12.0〜13.0m',
     meaning: '暴君のトカゲ王',
     pitch: 0.5,
-    triviaJa: 'ティラノサウルスは最大級の肉食恐竜で、その噛む力は恐竜の中で史上最大でした。（※陸上動物全体では古代巨大ワニのデイノスクスの方が強力だったと言われています）',
+    triviaJa: 'ティラノサウルスは最大級の肉食恐竜で、その噛む力は恐竜の中で史上最大でした。※陸上動物全体では古代巨大ワニのデイノスクスの方が強力だったと言われています',
     triviaEn: 'T-rex was the most famous predator with an incredibly strong bite.',
     expertKW: 'Carnivore',
     expertHint: '肉食動物',
