@@ -41,6 +41,9 @@ interface Dinosaur {
   meaning: string;
   triviaEn: string;
   triviaJa: string;
+  speciesName: string;
+  speciesMeaning: string;
+  speciesNote: string;
 }
 
 interface QuizQuestion {
@@ -501,7 +504,10 @@ DINO_CHALLENGES.forEach(challenge => {
     length: challenge.length,
     meaning: challenge.meaning,
     triviaJa: challenge.triviaJa,
-    triviaEn: challenge.triviaEn
+    triviaEn: challenge.triviaEn,
+    speciesName: challenge.speciesName,
+    speciesMeaning: challenge.speciesMeaning,
+    speciesNote: challenge.speciesNote
   };
 });
 
@@ -1375,7 +1381,7 @@ export default function App() {
               </h2>
             </div>
             <span className="text-xs text-slate-400 font-sans">
-              クイズに正解して、全10体のスーパー恐竜データカードをコレクションしよう！
+              クイズに正解して、全50種の古生物データカードをコレクションしよう！
             </span>
           </div>
 
@@ -1567,18 +1573,34 @@ export default function App() {
                     RESEARCH NOTES / <ruby>調査報告（日本語）<rt>ちょうさほうこく</rt></ruby>
                   </span>
                   <p className="text-xs sm:text-sm text-slate-200 leading-relaxed font-sans mt-0.5">
-                    {/* Add rubies dynamically or simple formatting */}
                     {activeDinoDetails.triviaJa}
                   </p>
                 </div>
 
-                <div className="p-3 bg-slate-950 border border-slate-800/80 rounded-lg flex flex-col gap-1">
-                  <span className="text-[10px] font-mono text-slate-400 tracking-wider uppercase block">
-                    SCIENTIFIC INTELLIGENCE (ENGLISH)
-                  </span>
-                  <p className="text-xs sm:text-sm text-slate-300 leading-relaxed italic font-mono mt-0.5">
-                    "{activeDinoDetails.triviaEn}"
-                  </p>
+                {/* Species Name & Details (SF Holographic Style) */}
+                <div className="p-3 bg-cyan-950/15 border border-cyan-500/25 rounded-lg flex flex-col gap-2 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 px-2 py-0.5 bg-cyan-500/10 text-cyan-400 font-mono text-[9px] border-b border-l border-cyan-500/30 rounded-bl">
+                    SPECIES TAXONOMY
+                  </div>
+                  <div className="flex items-baseline gap-2">
+                    <span className="text-[10px] font-mono text-cyan-400 tracking-wider uppercase">
+                      種小名 (Species):
+                    </span>
+                    <span className="text-xs sm:text-sm font-mono font-bold text-cyan-200 italic">
+                      {activeDinoDetails.speciesName}
+                    </span>
+                  </div>
+                  <div className="flex flex-col gap-0.5 font-sans">
+                    <span className="text-[10px] font-mono text-slate-400 uppercase">
+                      名前の由来・意味:
+                    </span>
+                    <p className="text-xs text-slate-200">
+                      {activeDinoDetails.speciesMeaning}
+                    </p>
+                  </div>
+                  <div className="mt-1 pt-1.5 border-t border-cyan-950/50 flex items-center gap-1.5 text-xs text-amber-300 font-sans">
+                    <span>{activeDinoDetails.speciesNote}</span>
+                  </div>
                 </div>
               </div>
 
@@ -1636,7 +1658,7 @@ export default function App() {
 
               <div className="p-4 sm:p-6 overflow-y-auto flex flex-col gap-4">
                 <div className="bg-emerald-950/20 border border-emerald-500/20 rounded p-3 text-xs text-slate-300 font-sans">
-                  💡 <strong>自習サポート:</strong> この恐竜の第1問・第2問に登場した全8個の英単語です。英単語をクリック（またはタップ）すると、ブラウザのネイティブ音声（en-US）で発音が流れます！
+                  💡 <strong>T君の自学自習サポート:</strong> この恐竜の第1問・第2問に登場した全8個の英単語です。英単語をクリック（またはタップ）すると、ブラウザのネイティブ音声（en-US）で発音が流れます！
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
