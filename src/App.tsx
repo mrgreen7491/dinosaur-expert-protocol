@@ -77,7 +77,7 @@ interface DinosaurChallenge {
 // 1.5 PRONUNCIATION DICTIONARY FOR QUIZ OPTIONS
 // ==========================================
 
-import { DINO_CHALLENGES, PRONUNCIATION_MAP } from './dinoData';
+import { DINO_CHALLENGES, PRONUNCIATION_MAP, VOCABULARY_MAP } from './dinoData';
 
 // ==========================================
 // 2. SYNTHETIC SOUND ENGINE (Web Audio API)
@@ -180,6 +180,22 @@ class AudioSynth {
       }
     } catch (e) {
       console.log('Speech synthesis failed:', e);
+    }
+  }
+
+  public static speakWord(text: string) {
+    if (this.isMuted) return;
+    try {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'en-US';
+        utterance.rate = 0.9;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.speak(utterance);
+      }
+    } catch (e) {
+      console.log('Word speech synthesis failed:', e);
     }
   }
 
@@ -755,6 +771,8 @@ export default function App() {
   const [unlockedEras, setUnlockedEras] = useState<('Triassic' | 'Jurassic' | 'Cretaceous')[]>(['Triassic']);
   const [showAllComplete, setShowAllComplete] = useState<boolean>(false);
   const [attempts, setAttempts] = useState<number>(0);
+  const [showVocabModal, setShowVocabModal] = useState<boolean>(false);
+  const [hasReviewedVocab, setHasReviewedVocab] = useState<boolean>(false);
 
   // Sync Audio Mute state
   useEffect(() => {
@@ -800,6 +818,7 @@ export default function App() {
     setIsCorrect(null);
     setSelectedOptionIndex(null);
     setShowExplanation(false);
+    setHasReviewedVocab(false);
 
     const nextIndex = currentQuestionIndex + 1;
 
@@ -839,6 +858,8 @@ export default function App() {
     setUnlockedEras(['Triassic']);
     setShowAllComplete(false);
     setAttempts(0);
+    setHasReviewedVocab(false);
+    setShowVocabModal(false);
     AudioSynth.playLevelUp();
   };
 
@@ -1164,16 +1185,33 @@ export default function App() {
 
                     <div className="flex justify-end">
                       {isCorrect ? (
-                        <button
-                          onClick={handleNextQuestion}
-                          className="px-5 py-2 rounded border border-emerald-500 bg-emerald-950/60 hover:bg-emerald-500 hover:text-black font-bold text-xs font-mono tracking-widest flex items-center gap-1.5 transition-all"
-                          id="next-btn"
-                        >
-                          {currentQuestionIndex + 1 === QUESTIONS.length 
-                            ? 'FINALIZE DECRYPTION' 
-                            : (currentQuestionIndex % 2 === 0 ? 'CONTINUE TO PART 2' : 'NEXT PROTOCOL')}
-                          <ArrowRight className="w-4 h-4" />
-                        </button>
+                        currentQuestionIndex % 2 === 1 && !hasReviewedVocab ? (
+                          <button
+                            onClick={() => {
+                              AudioSynth.playSelect();
+                              setShowVocabModal(true);
+                            }}
+                            className="px-5 py-2.5 rounded border border-cyan-500 bg-cyan-950/60 hover:bg-cyan-500 hover:text-black font-bold text-xs font-mono tracking-widest flex items-center gap-2 transition-all shadow-[0_0_15px_rgba(6,182,212,0.25)] animate-pulse"
+                            id="review-vocab-btn"
+                          >
+                            <BookOpen className="w-4 h-4" />
+                            Review Vocabulary / 単語の意味を確認
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => {
+                              handleNextQuestion();
+                              setHasReviewedVocab(false);
+                            }}
+                            className="px-5 py-2 rounded border border-emerald-500 bg-emerald-950/60 hover:bg-emerald-500 hover:text-black font-bold text-xs font-mono tracking-widest flex items-center gap-1.5 transition-all"
+                            id="next-btn"
+                          >
+                            {currentQuestionIndex + 1 === QUESTIONS.length 
+                              ? 'FINALIZE DECRYPTION' 
+                              : (currentQuestionIndex % 2 === 0 ? 'CONTINUE TO PART 2' : 'Next Protocol (Dinosaur Specimen Vaultへ)')}
+                            <ArrowRight className="w-4 h-4" />
+                          </button>
+                        )
                       ) : (
                         <button
                           onClick={() => {
@@ -1337,7 +1375,7 @@ export default function App() {
               </h2>
             </div>
             <span className="text-xs text-slate-400 font-sans">
-              クイズに正解して、全50体のスーパー恐竜データカードをコレクションしよう！
+              クイズに正解して、全10体のスーパー恐竜データカードをコレクションしよう！
             </span>
           </div>
 
@@ -1561,6 +1599,112 @@ export default function App() {
           </div>
         </div>
       )}
+
+      {/* ==========================================
+          MODAL: VOCABULARY REVIEW (PLAN B)
+          ========================================== */}
+      {showVocabModal && (() => {
+        const currentChallenge = DINO_CHALLENGES.find(c => c.id === currentQuestion.dinoId);
+        if (!currentChallenge) return null;
+        
+        const allWords = [
+          ...currentChallenge.vocabQuestion.options,
+          ...currentChallenge.basicQuestion.options
+        ];
+
+        return (
+          <div className="fixed inset-0 bg-slate-950/90 flex items-center justify-center p-4 z-50 animate-fadeIn" id="vocab-review-modal">
+            <div className={`bg-[#0a111c] border rounded-xl overflow-hidden shadow-2xl max-w-xl w-full max-h-[90vh] flex flex-col ${
+              currentChallenge.era === 'Triassic' ? 'border-cyan-500/40 glow-cyan' : currentChallenge.era === 'Jurassic' ? 'border-emerald-500/40 glow-green' : 'border-amber-500/40 glow-amber'
+            }`}>
+              <div className="border-b border-slate-800/80 px-4 py-3 bg-slate-900/50 flex items-center justify-between">
+                <span className="text-xs font-mono font-bold tracking-widest text-emerald-400 flex items-center gap-1.5">
+                  <BookOpen className="w-4 h-4 text-cyan-400" />
+                  VOCABULARY REVIEW / 語彙復習 — {currentChallenge.nameJa} ({currentChallenge.nameEn})
+                </span>
+                <button 
+                  onClick={() => {
+                    AudioSynth.playSelect();
+                    setShowVocabModal(false);
+                    setHasReviewedVocab(true);
+                  }}
+                  className="text-slate-400 hover:text-white font-mono text-sm border border-slate-800 bg-slate-900/60 px-2 py-0.5 rounded hover:bg-slate-800"
+                >
+                  CLOSE [X]
+                </button>
+              </div>
+
+              <div className="p-4 sm:p-6 overflow-y-auto flex flex-col gap-4">
+                <div className="bg-emerald-950/20 border border-emerald-500/20 rounded p-3 text-xs text-slate-300 font-sans">
+                  💡 <strong>T君の自学自習サポート:</strong> この恐竜の第1問・第2問に登場した全8個の英単語です。英単語をクリック（またはタップ）すると、ブラウザのネイティブ音声（en-US）で発音が流れます！
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {allWords.map((wordObj, idx) => {
+                    const isKeywordVocab = wordObj.text === currentChallenge.vocabQuestion.keyword;
+                    const isKeywordBasic = wordObj.text === currentChallenge.basicQuestion.keyword;
+                    const isKeyword = isKeywordVocab || isKeywordBasic;
+
+                    return (
+                      <div
+                        key={idx}
+                        onClick={() => {
+                          AudioSynth.playSelect();
+                          AudioSynth.speakWord(wordObj.text);
+                        }}
+                        className={`p-3 rounded-lg border transition-all duration-200 cursor-pointer flex flex-col justify-between gap-1 group hover:scale-[1.02] active:scale-[0.98] ${
+                          isKeyword 
+                            ? 'border-emerald-500/60 bg-emerald-950/30 shadow-[0_0_12px_rgba(16,185,129,0.15)]' 
+                            : 'border-slate-800 bg-slate-950/60 hover:border-cyan-500/40 hover:bg-slate-900/80'
+                        }`}
+                        id={`vocab-item-${idx}`}
+                      >
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-mono text-slate-500 uppercase">
+                            {idx < 4 ? 'PART 1: EXPERT' : 'PART 2: BASIC'} {isKeyword && '★ KEYWORD'}
+                          </span>
+                          <span className="text-cyan-400 group-hover:scale-110 transition-transform">🔊</span>
+                        </div>
+
+                        <div className="flex items-baseline justify-between gap-2">
+                          <span className="text-base font-mono font-bold text-emerald-300 tracking-wide">
+                            {wordObj.text}
+                          </span>
+                          <span className="text-xs font-mono text-slate-400">
+                            {PRONUNCIATION_MAP[wordObj.text] || ''}
+                          </span>
+                        </div>
+
+                        <span className="text-xs text-slate-200 font-sans font-medium border-t border-slate-900 pt-1">
+                          {wordObj.translation}
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="border-t border-slate-800/80 p-4 bg-slate-900/40 flex items-center justify-between">
+                <span className="text-[11px] font-mono text-slate-400">
+                  タップしてネイティブ発音を確認しよう
+                </span>
+                <button
+                  onClick={() => {
+                    AudioSynth.playSelect();
+                    setShowVocabModal(false);
+                    setHasReviewedVocab(true);
+                  }}
+                  className="px-5 py-2.5 rounded bg-emerald-500 hover:bg-emerald-400 text-black font-mono font-bold text-xs tracking-widest transition-all shadow-md flex items-center gap-1.5"
+                  id="vocab-done-btn"
+                >
+                  確認完了（次へ進む）
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* ==========================================
           8. MODAL: ERA LEVEL UP / TRAVEL ANNOUNCEMENT
