@@ -1636,7 +1636,7 @@ export default function App() {
 
               <div className="p-4 sm:p-6 overflow-y-auto flex flex-col gap-4">
                 <div className="bg-emerald-950/20 border border-emerald-500/20 rounded p-3 text-xs text-slate-300 font-sans">
-                  💡 <strong>T君の自学自習サポート:</strong> この恐竜の第1問・第2問に登場した全8個の英単語です。英単語をクリック（またはタップ）すると、ブラウザのネイティブ音声（en-US）で発音が流れます！
+                  💡 <strong>自習サポート:</strong> この恐竜の第1問・第2問に登場した全8個の英単語です。英単語をクリック（またはタップ）すると、ブラウザのネイティブ音声（en-US）で発音が流れます！
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
