@@ -1337,7 +1337,7 @@ export default function App() {
               </h2>
             </div>
             <span className="text-xs text-slate-400 font-sans">
-              クイズに正解して、全10体のスーパー恐竜データカードをコレクションしよう！
+              クイズに正解して、全50体のスーパー恐竜データカードをコレクションしよう！
             </span>
           </div>
 
