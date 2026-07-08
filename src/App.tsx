@@ -932,9 +932,9 @@ export default function App() {
         </div>
 
         {/* Dinosaur Jump Select Dropdown (Index) */}
-        <div className="flex items-center gap-2 bg-[#06090e] border border-emerald-500/30 rounded-lg px-3 py-1.5 shadow-inner">
+        <div className="flex items-center gap-2 bg-[#06090e] border border-emerald-500/30 rounded-lg px-3 py-1.5 shadow-inner w-full sm:w-auto">
           <BookOpen className="w-4 h-4 text-emerald-400 shrink-0" />
-          <div className="flex flex-col">
+          <div className="flex flex-col flex-1 sm:flex-initial">
             <span className="text-[9px] font-mono text-emerald-500/80 uppercase">SPECIES INDEX / <ruby>図鑑目次<rt>ずかんもくじ</rt></ruby></span>
             <select
               value={Math.floor(currentQuestionIndex / 2)}
@@ -949,7 +949,7 @@ export default function App() {
                   AudioSynth.playSelect();
                 }
               }}
-              className="bg-[#0a0f18] text-emerald-300 font-mono text-xs sm:text-sm font-bold border border-emerald-500/40 rounded px-2 py-1 outline-none focus:ring-1 focus:ring-emerald-400 cursor-pointer max-w-[240px] sm:max-w-[280px]"
+              className="bg-[#0a0f18] text-emerald-300 font-mono text-xs sm:text-sm font-bold border border-emerald-500/40 rounded px-2 py-1 outline-none focus:ring-1 focus:ring-emerald-400 cursor-pointer w-full sm:w-80 md:w-96 min-w-[280px] sm:min-w-[340px]"
               id="dino-index-select"
             >
               {DINO_CHALLENGES.map((dino, idx) => (
