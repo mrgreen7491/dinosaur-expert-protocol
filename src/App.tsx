@@ -544,10 +544,18 @@ const ERA_DATA = {
 // ==========================================
 
 function DinoHoloBlueprint({ dinoId, era }: { dinoId: string; era: 'Triassic' | 'Jurassic' | 'Cretaceous' }) {
-  // Renders a high-tech vector holographic line art wireframe of each dinosaur
+  // Renders high-tech vector holographic line art or loaded specimen illustration from images/ folder with fallback
+  const [imageError, setImageError] = useState(false);
+  const [imageFormatIndex, setImageFormatIndex] = useState(0); // 0: png, 1: jpg
+  const formats = ['.png', '.jpg'];
   const themeColor = era === 'Triassic' ? '#06b6d4' : era === 'Jurassic' ? '#10b981' : '#f59e0b';
-  
-  // Custom paths for stylized cybernetic dinosaur outlines
+
+  useEffect(() => {
+    setImageError(false);
+    setImageFormatIndex(0);
+  }, [dinoId]);
+
+  // Custom paths for stylized cybernetic dinosaur outlines (Fallback SVG)
   const renderSpecimenPath = () => {
     switch (dinoId) {
       case 'herrerasaurus':
@@ -718,7 +726,19 @@ function DinoHoloBlueprint({ dinoId, era }: { dinoId: string; era: 'Triassic' | 
           </>
         );
       default:
-        return null;
+        return (
+          <>
+            {/* Universal Cybernetic Specimen Wireframe Silhouette Fallback */}
+            <path d="M 45,170 C 70,140 120,130 160,140 C 180,130 205,100 235,110 C 255,115 270,130 275,145 C 260,155 240,150 220,145 C 195,140 185,155 175,185" stroke={themeColor} strokeWidth="3.5" fill="none" className="transition-all duration-500" />
+            <path d="M 235,120 L 272,130 M 235,130 L 260,138" stroke={themeColor} strokeWidth="2" fill="none" />
+            <path d="M 160,175 C 150,210 165,245 155,275 L 175,278" stroke={themeColor} strokeWidth="3.5" fill="none" />
+            <path d="M 105,185 C 95,215 110,245 100,272 L 118,274" stroke={themeColor} strokeWidth="3" fill="none" strokeDasharray="3,2" />
+            <path d="M 90,165 C 65,190 35,215 15,235" stroke={themeColor} strokeWidth="3" fill="none" />
+            <circle cx="250" cy="120" r="4" fill={themeColor} className="animate-ping" />
+            <line x1="250" y1="120" x2="280" y2="90" stroke={themeColor} strokeWidth="1" strokeDasharray="2,2" />
+            <text x="180" y="70" fill={themeColor} className="text-[9px] font-mono tracking-wider">HOLO_SYNTH_SPECIMEN: ACTIVE</text>
+          </>
+        );
     }
   };
 
@@ -731,31 +751,49 @@ function DinoHoloBlueprint({ dinoId, era }: { dinoId: string; era: 'Triassic' | 
       <div className="absolute inset-0 terminal-grid opacity-40 pointer-events-none" />
 
       {/* Cyber Reticles */}
-      <div className="absolute top-2 left-2 text-[8px] font-mono text-emerald-500/60 flex flex-col gap-0.5">
+      <div className="absolute top-2 left-2 text-[8px] font-mono text-emerald-500/60 flex flex-col gap-0.5 z-20">
         <span>SYS.SCAN_ACTIVE: TRUE</span>
         <span>RESOLUTION: 1024_PX</span>
         <span>SPECIMEN_ID: {dinoId.toUpperCase()}</span>
       </div>
 
-      <div className="absolute bottom-2 right-2 text-[8px] font-mono text-emerald-500/60 flex items-center gap-1.5">
+      <div className="absolute bottom-2 right-2 text-[8px] font-mono text-emerald-500/60 flex items-center gap-1.5 z-20">
         <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" style={{ backgroundColor: themeColor }} />
         <span>DIAGNOSTIC_FEED: ONLINE</span>
       </div>
 
-      {/* Actual SVG Graphic */}
-      <svg viewBox="0 0 300 300" className="w-full h-full max-h-[160px] sm:max-h-[200px] z-10 drop-shadow-lg">
-        {/* Hologram Circle Pedestal */}
-        <ellipse cx="150" cy="265" rx="90" ry="15" fill="none" stroke={`${themeColor}33`} strokeWidth="1" strokeDasharray="3,3" />
-        <ellipse cx="150" cy="265" rx="70" ry="10" fill="none" stroke={`${themeColor}55`} strokeWidth="1" />
-        
-        {/* Vertical light rays */}
-        <line x1="80" y1="265" x2="80" y2="150" stroke={`${themeColor}11`} strokeWidth="1" />
-        <line x1="150" y1="255" x2="150" y2="80" stroke={`${themeColor}11`} strokeWidth="1" />
-        <line x1="220" y1="265" x2="220" y2="150" stroke={`${themeColor}11`} strokeWidth="1" />
-        
-        {/* Dinosaur Outline */}
-        {renderSpecimenPath()}
-      </svg>
+      {!imageError ? (
+        <div className="relative z-10 w-full h-full flex items-center justify-center p-2">
+          <img
+            src={`images/${dinoId.toLowerCase()}${formats[imageFormatIndex]}`}
+            alt={dinoId}
+            className="max-h-[160px] sm:max-h-[190px] object-contain drop-shadow-[0_0_15px_rgba(16,185,129,0.35)] filter contrast-125 brightness-110 transition-all duration-300"
+            onError={() => {
+              if (imageFormatIndex < formats.length - 1) {
+                setImageFormatIndex(imageFormatIndex + 1);
+              } else {
+                setImageError(true);
+              }
+            }}
+            referrerPolicy="no-referrer"
+          />
+        </div>
+      ) : (
+        /* Actual SVG Graphic fallback */
+        <svg viewBox="0 0 300 300" className="w-full h-full max-h-[160px] sm:max-h-[200px] z-10 drop-shadow-lg">
+          {/* Hologram Circle Pedestal */}
+          <ellipse cx="150" cy="265" rx="90" ry="15" fill="none" stroke={`${themeColor}33`} strokeWidth="1" strokeDasharray="3,3" />
+          <ellipse cx="150" cy="265" rx="70" ry="10" fill="none" stroke={`${themeColor}55`} strokeWidth="1" />
+          
+          {/* Vertical light rays */}
+          <line x1="80" y1="265" x2="80" y2="150" stroke={`${themeColor}11`} strokeWidth="1" />
+          <line x1="150" y1="255" x2="150" y2="80" stroke={`${themeColor}11`} strokeWidth="1" />
+          <line x1="220" y1="265" x2="220" y2="150" stroke={`${themeColor}11`} strokeWidth="1" />
+          
+          {/* Dinosaur Outline */}
+          {renderSpecimenPath()}
+        </svg>
+      )}
     </div>
   );
 }
@@ -893,9 +931,39 @@ export default function App() {
           </div>
         </div>
 
+        {/* Dinosaur Jump Select Dropdown (Index) */}
+        <div className="flex items-center gap-2 bg-[#06090e] border border-emerald-500/30 rounded-lg px-3 py-1.5 shadow-inner">
+          <BookOpen className="w-4 h-4 text-emerald-400 shrink-0" />
+          <div className="flex flex-col">
+            <span className="text-[9px] font-mono text-emerald-500/80 uppercase">SPECIES INDEX / <ruby>図鑑目次<rt>ずかんもくじ</rt></ruby></span>
+            <select
+              value={Math.floor(currentQuestionIndex / 2)}
+              onChange={(e) => {
+                const targetDinoIdx = parseInt(e.target.value, 10);
+                if (!isNaN(targetDinoIdx)) {
+                  setCurrentQuestionIndex(targetDinoIdx * 2);
+                  setIsCorrect(null);
+                  setSelectedOptionIndex(null);
+                  setShowExplanation(false);
+                  setAttempts(0);
+                  AudioSynth.playSelect();
+                }
+              }}
+              className="bg-[#0a0f18] text-emerald-300 font-mono text-xs sm:text-sm font-bold border border-emerald-500/40 rounded px-2 py-1 outline-none focus:ring-1 focus:ring-emerald-400 cursor-pointer max-w-[240px] sm:max-w-[280px]"
+              id="dino-index-select"
+            >
+              {DINO_CHALLENGES.map((dino, idx) => (
+                <option key={dino.id} value={idx}>
+                  No.{idx + 1} {dino.nameEn} ({dino.nameJa})
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
         {/* Global Controls & Status */}
         <div className="flex items-center gap-4 text-xs font-mono">
-          <div className="hidden md:flex flex-col text-right">
+          <div className="hidden lg:flex flex-col text-right">
             <span className="text-emerald-500/80">SYSTEM_STATUS: <span className="text-emerald-400">ONLINE</span></span>
             <span className="text-slate-500 text-[10px]">COORDINATE: 2026-07-01_UTC</span>
           </div>
