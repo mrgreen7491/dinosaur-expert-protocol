@@ -92,6 +92,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
     try {
       if (roarAudioRef.current) {
         roarAudioRef.current.currentTime = 0;
+        roarAudioRef.current.volume = 0.25; // 25% volume so narration is clear
         roarAudioRef.current.play().catch((err) => {
           console.log('Audio play error / autoplay restriction:', err);
         });
@@ -116,6 +117,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
             utterance.lang = 'en-US';
             utterance.rate = 0.95;
             utterance.pitch = 0.95;
+            utterance.volume = 1.0; // Maximum volume for narration
             window.speechSynthesis.speak(utterance);
           }
         } catch (e) {
