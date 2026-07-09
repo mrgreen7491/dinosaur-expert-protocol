@@ -173,7 +173,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
       {/* Hidden Audio Elements */}
       <audio 
         ref={roarAudioRef} 
-        src="/sounds/roar.mp3?v=2" 
+        src={`${(import.meta as any).env.BASE_URL}sounds/roar.mp3?v=2`} 
         preload="auto" 
         onError={(e) => console.log('roar.mp3 load error:', e)}
       />
