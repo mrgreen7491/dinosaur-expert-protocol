@@ -913,8 +913,21 @@ export default function WelcomePage() {
   // Diagnostic Stats helpers
   const progressPercent = Math.round((unlockedDinoIds.length / 50) * 100);
 
-  if (showWelcome) {
-    return <WelcomePage onEnter={() => setShowWelcome(false)} />;
+ if (showWelcome) {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-screen bg-[#020924] text-slate-100 font-mono">
+        <div className="border border-emerald-500/30 p-8 rounded bg-[#0a0f1d] text-center max-w-md mx-4 shadow-2xl">
+          <h1 className="text-2xl font-bold text-emerald-400 mb-2 tracking-wider">DINOSAUR EXPERT</h1>
+          <p className="text-xs text-slate-400 mb-6">RESEARCH PROTOCOL v3.9</p>
+          <button 
+            onClick={() => setShowWelcome(false)} 
+            className="px-6 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-[#020924] font-bold rounded transition-colors text-sm tracking-widest"
+          >
+            ENTER SYSTEM
+          </button>
+        </div>
+      </div>
+    );
   }
 
   return (
