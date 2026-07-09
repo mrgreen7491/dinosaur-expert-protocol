@@ -80,7 +80,7 @@ interface DinosaurChallenge {
 // 1.5 PRONUNCIATION DICTIONARY FOR QUIZ OPTIONS
 // ==========================================
 
-import { DINO_CHALLENGES, PRONUNCIATION_MAP, VOCABULARY_MAP } from './dinoData';
+import { DINO_CHALLENGES, PRONUNCIATION_MAP, VOCABULARY_MAP } from '../dinoData';
 
 // ==========================================
 // 2. SYNTHETIC SOUND ENGINE (Web Audio API)
