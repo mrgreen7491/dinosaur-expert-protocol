@@ -802,7 +802,7 @@ function DinoHoloBlueprint({ dinoId, era }: { dinoId: string; era: 'Triassic' | 
 // 6. MAIN APP COMPONENT
 // ==========================================
 
-export default function App() {
+export default function WelcomePage() {
   // State variables
   const [showWelcome, setShowWelcome] = useState<boolean>(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
