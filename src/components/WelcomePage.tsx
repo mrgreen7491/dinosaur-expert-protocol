@@ -92,9 +92,9 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
     try {
       if (roarAudioRef.current) {
         roarAudioRef.current.currentTime = 0;
-        roarAudioRef.current.play().catch(() => playSyntheticRoar());
-      } else {
-        playSyntheticRoar();
+        roarAudioRef.current.play().catch((err) => {
+          console.log('Audio play error / autoplay restriction:', err);
+        });
       }
     } catch (e) {
       console.log('Audio playback caught:', e);
@@ -173,9 +173,9 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
       {/* Hidden Audio Elements */}
       <audio 
         ref={roarAudioRef} 
-        src="/sounds/roar.mp3" 
+        src="/sounds/roar.mp3?v=2" 
         preload="auto" 
-        onError={() => console.log('roar.mp3 missing')}
+        onError={(e) => console.log('roar.mp3 load error:', e)}
       />
       <audio 
         ref={voiceAudioRef} 
