@@ -295,3 +295,5 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
   );
 };
 
+export default WelcomePage;
+
