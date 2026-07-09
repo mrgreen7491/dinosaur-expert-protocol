@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
+import { WelcomePage } from './components/WelcomePage';
 import { 
   Compass, 
   Award, 
@@ -804,6 +805,7 @@ function DinoHoloBlueprint({ dinoId, era }: { dinoId: string; era: 'Triassic' | 
 
 export default function App() {
   // State variables
+  const [showWelcome, setShowWelcome] = useState<boolean>(true);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
   const [unlockedDinoIds, setUnlockedDinoIds] = useState<string[]>([]);
   const [isCorrect, setIsCorrect] = useState<boolean | null>(null);
@@ -829,8 +831,10 @@ export default function App() {
 
   // Audio trigger for keyboard-typing effects on load
   useEffect(() => {
-    AudioSynth.playSelect();
-  }, [currentQuestionIndex]);
+    if (!showWelcome) {
+      AudioSynth.playSelect();
+    }
+  }, [currentQuestionIndex, showWelcome]);
 
   // Handle checking answers
   const handleOptionClick = (optionIndex: number) => {
@@ -909,6 +913,10 @@ export default function App() {
 
   // Diagnostic Stats helpers
   const progressPercent = Math.round((unlockedDinoIds.length / 50) * 100);
+
+  if (showWelcome) {
+    return <WelcomePage onEnter={() => setShowWelcome(false)} />;
+  }
 
   return (
     <div className="min-h-screen bg-[#06090e] text-slate-100 font-sans relative crt-scanlines flex flex-col selection:bg-emerald-500 selection:text-black">
