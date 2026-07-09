@@ -38,6 +38,19 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
   const voiceAudioRef = useRef<HTMLAudioElement | null>(null);
   const timerRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
+  const spokenIndexRef = useRef<number>(-1);
+
+  // Cleanup speech synthesis on unmount
+  useEffect(() => {
+    return () => {
+      try {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+        }
+        if (timerRef.current) clearInterval(timerRef.current);
+      } catch (e) {}
+    };
+  }, []);
 
   // Initialize synth rumble / audio fallback
   const playSyntheticRoar = () => {
@@ -68,6 +81,13 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
   const handleStartCinematic = () => {
     setIsPlayingCinematic(true);
     startTimeRef.current = Date.now();
+    spokenIndexRef.current = -1;
+
+    try {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    } catch (e) {}
 
     try {
       if (roarAudioRef.current) {
@@ -75,11 +95,6 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
         roarAudioRef.current.play().catch(() => playSyntheticRoar());
       } else {
         playSyntheticRoar();
-      }
-
-      if (voiceAudioRef.current) {
-        voiceAudioRef.current.currentTime = 0;
-        voiceAudioRef.current.play().catch(() => {});
       }
     } catch (e) {
       console.log('Audio playback caught:', e);
@@ -89,6 +104,24 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
     timerRef.current = window.setInterval(() => {
       const elapsed = (Date.now() - startTimeRef.current) / 1000;
       setCurrentTime(elapsed);
+
+      // Check current subtitle index for speech synchronization
+      const subIdx = SUBTITLES.findIndex(sub => elapsed >= sub.start && elapsed < sub.end);
+      if (subIdx !== -1 && subIdx !== spokenIndexRef.current) {
+        spokenIndexRef.current = subIdx;
+        try {
+          if ('speechSynthesis' in window) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(SUBTITLES[subIdx].en);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.95;
+            utterance.pitch = 0.95;
+            window.speechSynthesis.speak(utterance);
+          }
+        } catch (e) {
+          console.log('Speech synthesis note:', e);
+        }
+      }
 
       if (elapsed >= 16.5) {
         if (timerRef.current) clearInterval(timerRef.current);
@@ -101,6 +134,9 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
     if (timerRef.current) clearInterval(timerRef.current);
     setIsFadingOut(true);
     try {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
       if (roarAudioRef.current) roarAudioRef.current.pause();
       if (voiceAudioRef.current) voiceAudioRef.current.pause();
     } catch (e) {}
@@ -137,9 +173,9 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
       {/* Hidden Audio Elements */}
       <audio 
         ref={roarAudioRef} 
-        src="/audio/dino-roar.mp3" 
+        src="/sounds/roar.mp3" 
         preload="auto" 
-        onError={() => console.log('dino-roar.mp3 missing')}
+        onError={() => console.log('roar.mp3 missing')}
       />
       <audio 
         ref={voiceAudioRef} 
