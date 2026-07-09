@@ -1,5 +1,4 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import { WelcomePage } from './components/WelcomePage';
 import { 
   Compass, 
   Award, 
