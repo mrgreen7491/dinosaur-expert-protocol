@@ -241,13 +241,11 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
                   style={{ animation: `fadeInUp 0.8s ease-out ${idx * 0.15}s both` }}
                 >
                   <div className="w-full h-24 rounded bg-slate-950 overflow-hidden relative border border-emerald-500/20 flex items-center justify-center">
-                    <span className="text-4xl filter drop-shadow-md group-hover:scale-125 transition-transform duration-300">
-                      {dino.icon}
-                    </span>
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-                    <span className="absolute bottom-1 left-1.5 text-[9px] font-mono text-emerald-400 font-bold">
-                      {dino.role}
-                    </span>
+                   <img 
+ 　　　　             src={dino.fallbackImg} 
+                     alt={dino.nameJa} 
+                     className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-300" 
+                 />
                   </div>
                   <div className="flex flex-col items-center">
                     <span className="text-xs font-mono font-bold text-slate-200">{dino.nameJa}</span>
