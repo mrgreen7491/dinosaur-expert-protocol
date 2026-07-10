@@ -21,11 +21,12 @@ const SUBTITLES: SubtitleLine[] = [
 ];
 
 const POPULAR_DINOS = [
-  { id: 't-rex', nameEn: 'Tyrannosaurus', nameJa: 'ティラノサウルス', role: 'APEX PREDATOR', icon: '🦖', fallbackImg: 'https://images.unsplash.com/photo-1534567153574-2b12153a87f0?q=80&w=600&auto=format&fit=crop', color: 'from-amber-600/80 to-emerald-900/90' },
-  { id: 'spinosaurus', nameEn: 'Spinosaurus', nameJa: 'スピノサウルス', role: 'RIVER KING', icon: '🐊', fallbackImg: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=600&auto=format&fit=crop', color: 'from-cyan-600/80 to-emerald-950/90' },
-  { id: 'triceratops', nameEn: 'Triceratops', nameJa: 'トリケラトプス', role: 'HORNED TITAN', icon: '🛡️', fallbackImg: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?q=80&w=600&auto=format&fit=crop', color: 'from-emerald-600/80 to-teal-950/90' },
-  { id: 'pteranodon', nameEn: 'Pteranodon', nameJa: 'プテラノドン', role: 'SKY RULER', icon: '🦅', fallbackImg: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?q=80&w=600&auto=format&fit=crop', color: 'from-sky-600/80 to-indigo-950/90' },
-  { id: 'velociraptor', nameEn: 'Velociraptor', nameJa: 'ヴェロキラプトル', role: 'SWIFT HUNTER', icon: '⚡', fallbackImg: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?q=80&w=600&auto=format&fit=crop', color: 'from-emerald-700/80 to-stone-950/90' }
+ const POPULAR_DINOS = [
+  { id: 't-rex', nameEn: 'Tyrannosaurus', nameJa: 'ティラノサウルス', role: 'APEX PREDATOR', icon: '🦖', fallbackImg: '/images/tyrannosaurus.png' },
+  { id: 'spinosaurus', nameEn: 'Spinosaurus', nameJa: 'スピノサウルス', role: 'RIVER KING', icon: '🐊', fallbackImg: '/images/spinosaurus.png' },
+  { id: 'triceratops', nameEn: 'Triceratops', nameJa: 'トリケラトプス', role: 'HORNED TITAN', icon: '🛡️', fallbackImg: '/images/triceratops.png' },
+  { id: 'pteranodon', nameEn: 'Pteranodon', nameJa: 'プテラノドン', role: 'SKY RULER', icon: '🦅', fallbackImg: '/images/pteranodon.png' },
+  { id: 'velociraptor', nameEn: 'Velociraptor', nameJa: 'ヴェロキラプトル', role: 'SWIFT HUNTER', icon: '⚡', fallbackImg: '/images/velociraptor.png' },
 ];
 
 export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
