@@ -274,12 +274,14 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
           // Active Cinematic Trailer & Subtitles View
           <div className="relative w-full max-w-4xl h-[60vh] flex flex-col items-center justify-center p-6 bg-slate-950/90 border border-emerald-500/50 rounded-2xl shadow-[0_0_50px_rgba(0,0,0,0.9)] overflow-hidden my-auto">
             
-            {/* Cinematic Background Creature Montage */}
-            <div className="absolute inset-0 overflow-hidden opacity-25 pointer-events-none flex items-center justify-center">
-              <span className="text-9xl animate-pulse">
-                {POPULAR_DINOS[Math.floor(currentTime / 3.3) % POPULAR_DINOS.length].icon}
-              </span>
-            </div>
+           {/* Cinematic Background Creature Montage */}
+           <div className="absolute inset-0 overflow-hidden opacity-25 pointer-events-none flex items-center justify-center">
+             <img 
+               src={POPULAR_DINOS[Math.floor(currentTime / 3.3) % POPULAR_DINOS.length].fallbackImg}
+               alt="Cinematic Dino"
+               className="w-64 h-64 object-contain animate-pulse"
+             />
+           </div>
 
             {/* Glowing Center Badge */}
             <div className="relative z-10 flex flex-col items-center gap-6 my-auto">
