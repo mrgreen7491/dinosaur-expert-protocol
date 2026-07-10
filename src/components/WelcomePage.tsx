@@ -279,7 +279,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
              <img 
                src={POPULAR_DINOS[Math.floor(currentTime / 3.3) % POPULAR_DINOS.length].fallbackImg}
                alt="Cinematic Dino"
-               className="w-64 h-64 object-contain animate-pulse"
+               className="w-[512px] h-[512px] object-contain animate-pulse"
              />
            </div>
 
