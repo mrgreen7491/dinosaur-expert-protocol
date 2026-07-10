@@ -21,11 +21,13 @@ const SUBTITLES: SubtitleLine[] = [
 ];
 
 const POPULAR_DINOS = [
-  { id: 't-rex', nameEn: 'Tyrannosaurus', nameJa: 'ティラノサウルス', role: 'APEX PREDATOR', icon: '🦖', fallbackImg: 'images/tyrannosaurus.png' },
-  { id: 'spinosaurus', nameEn: 'Spinosaurus', nameJa: 'スピノサウルス', role: 'RIVER KING', icon: '🐊', fallbackImg: 'images/spinosaurus.png' },
-  { id: 'triceratops', nameEn: 'Triceratops', nameJa: 'トリケラトプス', role: 'HORNED TITAN', icon: '🛡️', fallbackImg: 'images/triceratops.png' },
-  { id: 'pteranodon', nameEn: 'Pteranodon', nameJa: 'プテラノドン', role: 'SKY RULER', icon: '🦅', fallbackImg: 'images/pteranodon.png' },
-  { id: 'velociraptor', nameEn: 'Velociraptor', nameJa: 'ヴェロキラプトル', role: 'SWIFT HUNTER', icon: '⚡', fallbackImg: 'images/velociraptor.png' },
+  { id: 't-rex', nameEn: 'Tyrannosaurus', nameJa: 'ティラノサウルス', role: 'APEX PREDATOR', icon: '🦖', fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/tyrannosaurus.png?raw=true' },
+  { id: 'spinosaurus', nameEn: 'Spinosaurus', nameJa: 'スピノサウルス', role: 'RIVER KING', icon: '🐊', fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/spinosaurus.png?raw=true' },
+  { id: 'triceratops', nameEn: 'Triceratops', nameJa: 'トリケラトプス', role: 'HORNED TITAN', icon: '🛡️', fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/triceratops.png?raw=true' },
+  { id: 'pteranodon', nameEn: 'Pteranodon', nameJa: 'プテラノドン', role: 'SKY RULER', icon: '🦅', fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/pteranodon.png?raw=true
+' },
+  { id: 'velociraptor', nameEn: 'Velociraptor', nameJa: 'ヴェロキラプトル', role: 'SWIFT HUNTER', icon: '⚡', fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/velociraptor.png?raw=true
+' },
 ];
 
 export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
