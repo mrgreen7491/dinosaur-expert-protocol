@@ -33,6 +33,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
   const [currentTime, setCurrentTime] = useState(0);
   const [isFadingOut, setIsFadingOut] = useState(false);
   const [hasError, setHasError] = useState(false);
+  const [selectedDino, setSelectedDino] = useState<typeof POPULAR_DINOS[0] | null>(null);
 
   const roarAudioRef = useRef<HTMLAudioElement | null>(null);
   const voiceAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -52,32 +53,6 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
     };
   }, []);
 
-  // Initialize synth rumble / audio fallback
-  const playSyntheticRoar = () => {
-    try {
-      const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
-      if (!AudioCtx) return;
-      const ctx = new AudioCtx();
-      if (ctx.state === 'suspended') ctx.resume();
-
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = 'sawtooth';
-      osc.frequency.setValueAtTime(80, ctx.currentTime);
-      osc.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + 2.5);
-
-      gain.gain.setValueAtTime(0.4, ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 3.0);
-
-      osc.connect(gain);
-      gain.connect(ctx.destination);
-      osc.start();
-      osc.stop(ctx.currentTime + 3.0);
-    } catch (e) {
-      console.log('Synthetic audio note:', e);
-    }
-  };
-
   const handleStartCinematic = () => {
     setIsPlayingCinematic(true);
     startTimeRef.current = Date.now();
@@ -92,7 +67,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
     try {
       if (roarAudioRef.current) {
         roarAudioRef.current.currentTime = 0;
-        roarAudioRef.current.volume = 0.25; // 25% volume so narration is clear
+        roarAudioRef.current.volume = 0.25;
         roarAudioRef.current.play().catch((err) => {
           console.log('Audio play error / autoplay restriction:', err);
         });
@@ -106,7 +81,6 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
       const elapsed = (Date.now() - startTimeRef.current) / 1000;
       setCurrentTime(elapsed);
 
-      // Check current subtitle index for speech synchronization
       const subIdx = SUBTITLES.findIndex(sub => elapsed >= sub.start && elapsed < sub.end);
       if (subIdx !== -1 && subIdx !== spokenIndexRef.current) {
         spokenIndexRef.current = subIdx;
@@ -117,7 +91,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
             utterance.lang = 'en-US';
             utterance.rate = 0.95;
             utterance.pitch = 0.95;
-            utterance.volume = 1.0; // Maximum volume for narration
+            utterance.volume = 1.0;
             window.speechSynthesis.speak(utterance);
           }
         } catch (e) {
@@ -237,8 +211,10 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
               {POPULAR_DINOS.map((dino, idx) => (
                 <div 
                   key={dino.id}
-                  className="group relative bg-slate-900/90 border border-emerald-500/30 rounded-xl overflow-hidden shadow-xl p-3 flex flex-col items-center gap-2 transition-all duration-300 hover:border-emerald-400 hover:scale-105"
+                  onClick={() => setSelectedDino(dino)}
+                  className="group relative bg-slate-900/90 border border-emerald-500/30 rounded-xl overflow-hidden shadow-xl p-3 flex flex-col items-center gap-2 transition-all duration-300 hover:border-emerald-400 hover:scale-105 cursor-pointer"
                   style={{ animation: `fadeInUp 0.8s ease-out ${idx * 0.15}s both` }}
+                  id={`popular-dino-card-${dino.id}`}
                 >
                   <div className="w-full h-24 rounded bg-slate-950 overflow-hidden relative border border-emerald-500/20 flex items-center justify-center">
                    <img 
@@ -325,6 +301,72 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
 
       </div>
 
+      {/* Dinosaur Detail Modal Popup */}
+      {selectedDino && (
+        <div 
+          className="fixed inset-0 bg-slate-950/85 backdrop-blur-sm flex items-center justify-center p-4 z-50 animate-fadeIn"
+          onClick={() => setSelectedDino(null)}
+          id="dino-detail-modal-overlay"
+        >
+          <div 
+            className="bg-[#09141f] border border-emerald-500/60 rounded-2xl p-6 max-w-md w-full shadow-[0_0_50px_rgba(16,185,129,0.3)] flex flex-col gap-4 text-left relative"
+            onClick={(e) => e.stopPropagation()}
+            id="dino-detail-modal-content"
+          >
+            <div className="flex items-center justify-between border-b border-emerald-950/85 pb-3">
+              <span className="text-xs font-mono text-emerald-400 font-bold uppercase tracking-widest flex items-center gap-1.5">
+                <Sparkles className="w-4 h-4 text-yellow-400 animate-spin" />
+                SPECIMEN ARCHIVE // {selectedDino.id.toUpperCase()}
+              </span>
+              <button 
+                onClick={() => setSelectedDino(null)}
+                className="text-slate-400 hover:text-white font-mono text-xs px-2.5 py-1 rounded border border-slate-800 bg-slate-900 cursor-pointer"
+                id="modal-close-btn"
+              >
+                CLOSE [X]
+              </button>
+            </div>
+
+            <div className="flex items-center gap-4 bg-slate-950/80 p-3 rounded-xl border border-emerald-500/20">
+              <div className="w-24 h-24 rounded-lg bg-slate-900 overflow-hidden flex items-center justify-center border border-emerald-500/30 shrink-0">
+                <img 
+                  src={selectedDino.fallbackImg} 
+                  alt={selectedDino.nameJa} 
+                  className="w-full h-full object-contain p-2"
+                />
+              </div>
+              <div className="flex flex-col gap-1">
+                <span className="text-[10px] font-mono text-emerald-400 font-bold px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-500/30 w-max">
+                  {selectedDino.role}
+                </span>
+                <h3 className="text-xl font-bold text-white font-sans mt-1">{selectedDino.nameJa}</h3>
+                <p className="text-xs font-mono text-cyan-300 italic">{selectedDino.nameEn}</p>
+              </div>
+            </div>
+
+            <div className="bg-slate-950 p-3.5 rounded-lg border border-emerald-950/80 text-xs font-sans text-slate-200 leading-relaxed flex flex-col gap-2">
+              <div className="flex justify-between items-center font-mono border-b border-slate-900 pb-1.5">
+                <span className="text-slate-400">SPECIMEN ID:</span>
+                <span className="text-emerald-400 font-bold">{selectedDino.id}</span>
+              </div>
+              <p className="text-slate-300 leading-relaxed">
+                この古生物は中生代における地球の生態系で圧倒的な存在感を放っていました。図鑑モードでクイズに正解して、詳細な生態データや鳴き声コードを完全解除しましょう！
+              </p>
+            </div>
+
+            <div className="flex justify-end pt-1">
+              <button
+                onClick={() => setSelectedDino(null)}
+                className="px-6 py-2.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-mono font-bold text-xs tracking-wider cursor-pointer shadow-lg transition-transform hover:scale-105"
+                id="modal-acknowledge-btn"
+              >
+                ACKNOWLEDGE & CLOSE
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Footer Info */}
       <div className="w-full py-4 text-center border-t border-emerald-950/80 bg-slate-950/80 text-[10px] font-mono text-slate-500 z-20 shrink-0">
         DINO WORLD 50 ARCHIVE SYSTEM // ALL PREHISTORIC DATA VERIFIED
@@ -334,4 +376,3 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
 };
 
 export default WelcomePage;
-
