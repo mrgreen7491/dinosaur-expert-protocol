@@ -21,11 +21,51 @@ const SUBTITLES: SubtitleLine[] = [
 ];
 
 const POPULAR_DINOS = [
-  { id: 't-rex', nameEn: 'Tyrannosaurus', nameJa: 'ティラノサウルス', role: 'APEX PREDATOR', icon: '🦖', fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/tyrannosaurus.png?raw=true' },
-  { id: 'spinosaurus', nameEn: 'Spinosaurus', nameJa: 'スピノサウルス', role: 'RIVER KING', icon: '🐊', fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/spinosaurus.png?raw=true' },
-  { id: 'triceratops', nameEn: 'Triceratops', nameJa: 'トリケラトプス', role: 'HORNED TITAN', icon: '🛡️', fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/triceratops.png?raw=true' },
-  { id: 'pteranodon', nameEn: 'Pteranodon', nameJa: 'プテラノドン', role: 'SKY RULER', icon: '🦅', fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/pteranodon.png?raw=true' },
-  { id: 'velociraptor', nameEn: 'Velociraptor', nameJa: 'ヴェロキラプトル', role: 'SWIFT HUNTER', icon: '⚡', fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/velociraptor.png?raw=true' },
+  { 
+    id: 't-rex', 
+    nameEn: 'Tyrannosaurus', 
+    nameJa: 'ティラノサウルス', 
+    role: 'APEX PREDATOR', 
+    icon: '🦖', 
+    fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/tyrannosaurus.png?raw=true',
+    description: "白亜紀後期の北米に生息した、史上最大級の肉食恐竜。強力な顎と鋭い歯で獲物を圧倒した。"
+  },
+  { 
+    id: 'triceratops', 
+    nameEn: 'Triceratops', 
+    nameJa: 'トリケラトプス', 
+    role: 'HORNED TITAN', 
+    icon: '🛡️', 
+    fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/triceratops.png?raw=true',
+    description: "3本の角と大きなフリルが特徴の草食恐竜。群れで生活し、植物を食べていたとされる温厚な恐竜。"
+  },
+  { 
+    id: 'brachiosaurus', 
+    nameEn: 'Brachiosaurus', 
+    nameJa: 'ブラキオサウルス', 
+    role: 'LONG-NECK GIANTS', 
+    icon: '🦕', 
+    fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/brachiosaurus.png?raw=true',
+    description: "長い首と巨大な体を持つ草食恐竜。高い木々の葉を食べるのに適した体構造をしていた。"
+  },
+  { 
+    id: 'stegosaurus', 
+    nameEn: 'Stegosaurus', 
+    nameJa: 'ステゴサウルス', 
+    role: 'SPIKED ARMOR', 
+    icon: '🛡️', 
+    fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/stegosaurus.png?raw=true',
+    description: "背中に並んだ板状の骨と、尾のスパイクが特徴。身を守るためにそれらを進化させたとされる。"
+  },
+  { 
+    id: 'velociraptor', 
+    nameEn: 'Velociraptor', 
+    nameJa: 'ヴェロキラプトル', 
+    role: 'SWIFT HUNTER', 
+    icon: '⚡', 
+    fallbackImg: 'https://github.com/mrgreen7491/dinosaur-expert-protocol/blob/main/public/images/velociraptor.png?raw=true',
+    description: "小型だが非常に知能が高く、群れで狩りをしたとされる肉食恐竜。敏捷性に優れていた。"
+  },
 ];
 
 export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
@@ -40,6 +80,24 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
   const timerRef = useRef<number | null>(null);
   const startTimeRef = useRef<number>(0);
   const spokenIndexRef = useRef<number>(-1);
+
+  // Speech synthesis when modal opens
+  useEffect(() => {
+    if (selectedDino) {
+      try {
+        if ('speechSynthesis' in window) {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(selectedDino.nameEn);
+          utterance.lang = 'en-US';
+          utterance.rate = 1.0;
+          utterance.pitch = 1.0;
+          window.speechSynthesis.speak(utterance);
+        }
+      } catch (e) {
+        console.log('Modal speech synthesis error:', e);
+      }
+    }
+  }, [selectedDino]);
 
   // Cleanup speech synthesis on unmount
   useEffect(() => {
@@ -121,12 +179,6 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
       onEnter();
     }, 600);
   };
-
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) clearInterval(timerRef.current);
-    };
-  }, []);
 
   const activeSub = SUBTITLES.find(sub => currentTime >= sub.start && currentTime < sub.end);
 
@@ -217,11 +269,12 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
                   id={`popular-dino-card-${dino.id}`}
                 >
                   <div className="w-full h-24 rounded bg-slate-950 overflow-hidden relative border border-emerald-500/20 flex items-center justify-center">
-                   <img 
- 　　　　             src={dino.fallbackImg} 
-                     alt={dino.nameJa} 
-                     className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-300" 
-                 />
+                    <img 
+                      src={dino.fallbackImg} 
+                      alt={dino.nameJa} 
+                      className="w-full h-full object-contain p-2 group-hover:scale-110 transition-transform duration-300" 
+                      referrerPolicy="no-referrer"
+                    />
                   </div>
                   <div className="flex flex-col items-center">
                     <span className="text-xs font-mono font-bold text-slate-200">{dino.nameJa}</span>
@@ -256,6 +309,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
                src={POPULAR_DINOS[Math.floor(currentTime / 3.3) % POPULAR_DINOS.length].fallbackImg}
                alt="Cinematic Dino"
                className="w-[512px] h-[512px] object-contain animate-pulse"
+               referrerPolicy="no-referrer"
              />
            </div>
 
@@ -333,6 +387,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
                   src={selectedDino.fallbackImg} 
                   alt={selectedDino.nameJa} 
                   className="w-full h-full object-contain p-2"
+                  referrerPolicy="no-referrer"
                 />
               </div>
               <div className="flex flex-col gap-1">
@@ -350,7 +405,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
                 <span className="text-emerald-400 font-bold">{selectedDino.id}</span>
               </div>
               <p className="text-slate-300 leading-relaxed">
-                この古生物は中生代における地球の生態系で圧倒的な存在感を放っていました。図鑑モードでクイズに正解して、詳細な生態データや鳴き声コードを完全解除しましょう！
+                {selectedDino.description}
               </p>
             </div>
 
