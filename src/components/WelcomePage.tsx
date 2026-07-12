@@ -158,7 +158,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
         }
       }
 
-      if (elapsed >= 16.5) {
+      if (elapsed >= 18.0) {
         if (timerRef.current) clearInterval(timerRef.current);
         handleTriggerExit();
       }
