@@ -18,7 +18,7 @@ const SUBTITLES: SubtitleLine[] = [
   { start: 7.0, end: 8.5, en: "they ruled the Earth.", ja: "彼らは地球の支配者だった。" },
   { start: 8.5, end: 11.0, en: "Now, the gates are open.", ja: "今、その扉が開く。" },
   { start: 11.0, end: 14.0, en: "Are you ready to face the giants?", ja: "巨獣（きょじゅう）たちに立ち向かう準備はいいか？" },
-  { start: 14.0, end: 17.5, en: "Your ultimate adventure begins now!", ja: "究極（きゅうきょく）の冒険が、ここから始まる" }
+  { start: 14.0, end: 18.5, en: "Your ultimate adventure begins now!", ja: "究極（きゅうきょく）の冒険が、ここから始まる" }
 ];
 
 const POPULAR_DINOS = [
