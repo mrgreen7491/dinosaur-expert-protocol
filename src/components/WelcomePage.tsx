@@ -14,7 +14,7 @@ interface SubtitleLine {
 
 const SUBTITLES: SubtitleLine[] = [
   { start: 0.0, end: 3.5, en: "Welcome... to the Dino World.", ja: "ディノ・ワールドへ、ようこそ。" },
-  { start: 3.5, end: 7.5, en: "Sixty-six million years ago, they ruled the Earth.", ja: "6600万年前、彼らは地球の支配者だった。" },
+  { start: 3.5, end: 7.5, en: "From 230 to 66 million years ago, they ruled the Earth.", ja: "2億3000万年前から6600万年前まで、彼らは地球の支配者だった。" },
   { start: 7.5, end: 10.0, en: "Now, the gates are open.", ja: "今、その扉が開く。" },
   { start: 10.0, end: 13.0, en: "Are you ready to face the giants?", ja: "巨獣（きょじゅう）たちに立ち向かう準備はいいか？" },
   { start: 13.0, end: 16.5, en: "Your ultimate adventure begins now!", ja: "究極（きゅうきょく）の冒険が、ここから始まる！" }
@@ -254,7 +254,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
                 DINO <span className="text-emerald-400">WORLD</span>
               </h1>
               <p className="text-sm sm:text-base text-slate-300 font-sans max-w-xl mx-auto leading-relaxed">
-                6600万年の時を越え、恐竜たちの秘密が今、解き明かされる。究極の英語＆古生物学アドベンチャーへようこそ。
+                2億3000万年前から6600万年前まで、地球を支配した恐竜たち。その知られざる秘密が今、解き明かされる。究極の英語＆恐竜・爬虫類アドベンチャーへようこそ。
               </p>
             </div>
 
