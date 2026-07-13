@@ -254,7 +254,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
                 DINO <span className="text-emerald-400">WORLD</span>
               </h1>
               <p className="text-sm sm:text-base text-slate-300 font-sans max-w-xl mx-auto leading-relaxed">
-                6600万年の時を越え、恐竜たちの秘密が今、解き明かされる。究極の英語＆古生物学アドベンチャーへようこそ。
+                2億3000万年～6600万年の時を越え、恐竜たちの秘密が今、解き明かされる。究極の英語＆恐竜・爬虫類アドベンチャーへようこそ。
               </p>
             </div>
 
