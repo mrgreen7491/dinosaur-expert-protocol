@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo, useRef } from 'react';
-import WelcomePage from './components/WelcomePage';
+import { WelcomePage } from './components/WelcomePage';
 import { 
   Compass, 
   Award, 
@@ -81,7 +81,7 @@ interface DinosaurChallenge {
 // 1.5 PRONUNCIATION DICTIONARY FOR QUIZ OPTIONS
 // ==========================================
 
-import { DINO_CHALLENGES, PRONUNCIATION_MAP, VOCABULARY_MAP } from './dinoData';
+import { DINO_CHALLENGES, PRONUNCIATION_MAP, VOCABULARY_MAP, getPronunciation } from './dinoData';
 
 // ==========================================
 // 2. SYNTHETIC SOUND ENGINE (Web Audio API)
@@ -768,7 +768,7 @@ function DinoHoloBlueprint({ dinoId, era }: { dinoId: string; era: 'Triassic' | 
           <img
             src={`images/${dinoId.toLowerCase()}${formats[imageFormatIndex]}`}
             alt={dinoId}
-            className="max-h-[160px] sm:max-h-[190px] object-contain drop-shadow-[0_0_15px_rgba(16,185,129,0.35)] filter contrast-125 brightness-110 transition-all duration-300"
+            className="max-h-[300px] sm:max-h-[380px] scale-125 sm:scale-150 object-contain drop-shadow-[0_0_25px_rgba(16,185,129,0.5)] filter contrast-125 brightness-110 transition-all duration-300"
             onError={() => {
               if (imageFormatIndex < formats.length - 1) {
                 setImageFormatIndex(imageFormatIndex + 1);
@@ -781,7 +781,7 @@ function DinoHoloBlueprint({ dinoId, era }: { dinoId: string; era: 'Triassic' | 
         </div>
       ) : (
         /* Actual SVG Graphic fallback */
-        <svg viewBox="0 0 300 300" className="w-full h-full max-h-[160px] sm:max-h-[200px] z-10 drop-shadow-lg">
+        <svg viewBox="0 0 300 300" className="w-full h-full max-h-[300px] sm:max-h-[380px] scale-125 z-10 drop-shadow-lg">
           {/* Hologram Circle Pedestal */}
           <ellipse cx="150" cy="265" rx="90" ry="15" fill="none" stroke={`${themeColor}33`} strokeWidth="1" strokeDasharray="3,3" />
           <ellipse cx="150" cy="265" rx="70" ry="10" fill="none" stroke={`${themeColor}55`} strokeWidth="1" />
@@ -919,7 +919,10 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#06090e] text-slate-100 font-sans relative crt-scanlines flex flex-col selection:bg-emerald-500 selection:text-black">
+    <div className="min-h-screen bg-[url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center text-slate-100 font-sans relative crt-scanlines flex flex-col selection:bg-emerald-500 selection:text-black">
+      {/* Background Prehistoric Overlay */}
+      <div className="absolute inset-0 bg-slate-950/85 pointer-events-none z-0" />
+
       {/* CRT Overlay flicker */}
       <div className="absolute inset-0 bg-[#06090e]/10 pointer-events-none z-50 crt-flicker" />
 
@@ -930,20 +933,20 @@ export default function App() {
             <Compass className="w-6 h-6 text-emerald-400" />
           </div>
           <div>
-            <h1 className="text-sm font-mono font-bold tracking-widest text-emerald-400 flex items-center gap-1">
-              DINOSAUR EXPERT RESEARCH PROTOCOL <span className="text-[10px] bg-emerald-950 text-emerald-400 px-1 py-0.5 rounded border border-emerald-500/20">v3.9</span>
+            <h1 className="text-sm font-mono font-bold tracking-widest text-emerald-300 flex items-center gap-1">
+              DINOSAUR EXPERT RESEARCH PROTOCOL <span className="text-[10px] bg-emerald-950 text-emerald-300 px-1 py-0.5 rounded border border-emerald-500/40">v3.9</span>
             </h1>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-slate-200 font-medium">
               <ruby>古生物探査英語システム<rt>こせいぶつたんさえいごしすてむ</rt></ruby> — EXPERT METHODOLOGY
             </p>
           </div>
         </div>
 
         {/* Dinosaur Jump Select Dropdown (Index) */}
-        <div className="flex items-center gap-2 bg-[#06090e] border border-emerald-500/30 rounded-lg px-3 py-1.5 shadow-inner w-full sm:w-auto">
+        <div className="flex items-center gap-2 bg-[#06090e] border border-emerald-500/40 rounded-lg px-3 py-1.5 shadow-inner w-full sm:w-auto">
           <BookOpen className="w-4 h-4 text-emerald-400 shrink-0" />
           <div className="flex flex-col flex-1 sm:flex-initial">
-            <span className="text-[9px] font-mono text-emerald-500/80 uppercase">SPECIES INDEX / <ruby>図鑑目次<rt>ずかんもくじ</rt></ruby></span>
+            <span className="text-[10px] font-mono text-emerald-300 font-bold uppercase">SPECIES INDEX / <ruby>図鑑目次<rt>ずかんもくじ</rt></ruby></span>
             <select
               value={Math.floor(currentQuestionIndex / 2)}
               onChange={(e) => {
@@ -957,7 +960,7 @@ export default function App() {
                   AudioSynth.playSelect();
                 }
               }}
-              className="bg-[#0a0f18] text-emerald-300 font-mono text-xs sm:text-sm font-bold border border-emerald-500/40 rounded px-2 py-1 outline-none focus:ring-1 focus:ring-emerald-400 cursor-pointer w-full sm:w-80 md:w-96 min-w-[280px] sm:min-w-[340px]"
+              className="bg-[#0a0f18] text-white font-mono text-xs sm:text-sm font-bold border border-emerald-500/60 rounded px-2 py-1 outline-none focus:ring-1 focus:ring-emerald-400 cursor-pointer w-full sm:w-80 md:w-96 min-w-[280px] sm:min-w-[340px]"
               id="dino-index-select"
             >
               {DINO_CHALLENGES.map((dino, idx) => (
@@ -972,8 +975,8 @@ export default function App() {
         {/* Global Controls & Status */}
         <div className="flex items-center gap-4 text-xs font-mono">
           <div className="hidden lg:flex flex-col text-right">
-            <span className="text-emerald-500/80">SYSTEM_STATUS: <span className="text-emerald-400">ONLINE</span></span>
-            <span className="text-slate-500 text-[10px]">COORDINATE: 2026-07-01_UTC</span>
+            <span className="text-emerald-300 font-bold">SYSTEM_STATUS: <span className="text-emerald-400">ONLINE</span></span>
+            <span className="text-slate-300 text-[10px] font-semibold">COORDINATE: 2026-07-01_UTC</span>
           </div>
 
           <button 
@@ -1074,7 +1077,7 @@ export default function App() {
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                 DINO SCANNER: SPECIMEN_{currentDino.nameEn.toUpperCase()}
               </span>
-              <span className="text-slate-500">
+              <span className="text-slate-300 font-semibold">
                 ERA: {currentDino.era.toUpperCase()}
               </span>
             </div>
@@ -1089,11 +1092,11 @@ export default function App() {
               <div className="sm:col-span-3 flex flex-col gap-3 font-mono text-xs">
                 <div className="bg-slate-950/60 rounded border border-emerald-950/50 p-3 flex flex-col gap-1.5">
                   <div className="flex justify-between border-b border-emerald-950/40 pb-1">
-                    <span className="text-slate-500">GENUS / <ruby>学名<rt>がくめい</rt></ruby></span>
-                    <span className="text-emerald-400 font-bold italic">{currentDino.scientificName}</span>
+                    <span className="text-slate-300 font-semibold">GENUS / <ruby>学名<rt>がくめい</rt></ruby></span>
+                    <span className="text-emerald-300 font-bold italic">{currentDino.scientificName}</span>
                   </div>
                   <div className="flex justify-between border-b border-emerald-950/40 pb-1">
-                    <span className="text-slate-500">DIET / <ruby>食性<rt>しょくせい</rt></ruby></span>
+                    <span className="text-slate-300 font-semibold">DIET / <ruby>食性<rt>しょくせい</rt></ruby></span>
                     <span className={`font-bold ${
                       currentDino.diet === 'Carnivore' ? 'text-red-400' : currentDino.diet === 'Herbivore' ? 'text-green-400' : 'text-blue-400'
                     }`}>
@@ -1101,14 +1104,14 @@ export default function App() {
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-500">LENGTH / <ruby>全長<rt>ぜんちょう</rt></ruby></span>
-                    <span className="text-cyan-400 font-bold">{currentDino.length}</span>
+                    <span className="text-slate-300 font-semibold">LENGTH / <ruby>全長<rt>ぜんちょう</rt></ruby></span>
+                    <span className="text-cyan-300 font-bold">{currentDino.length}</span>
                   </div>
                 </div>
 
-                <div className="bg-emerald-950/10 rounded border border-emerald-500/10 p-2.5 flex items-start gap-2">
+                <div className="bg-emerald-950/20 rounded border border-emerald-500/20 p-2.5 flex items-start gap-2">
                   <Info className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-[11px] text-slate-300 leading-relaxed font-sans">
+                  <p className="text-[11px] text-slate-100 font-medium leading-relaxed font-sans">
                     <strong>システムログ:</strong> この恐竜のデータを解読中。英語クイズに正解して、暗号化されたスペルと鳴き声コードを解除し、図鑑（コレクション）をアップグレードしてください。
                   </p>
                 </div>
@@ -1121,25 +1124,25 @@ export default function App() {
             
             {/* Header / ID Info */}
             <div className="flex justify-between items-center text-xs font-mono border-b border-emerald-950/50 pb-3">
-              <span className="text-amber-500 font-bold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 bg-amber-500 rounded-full animate-ping" />
+              <span className="text-amber-400 font-bold flex items-center gap-1">
+                <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-ping" />
                 DECRYPTION PROTOCOL: {currentDino.nameEn.toUpperCase()} — {currentQuestionIndex % 2 === 0 ? 'PART 1: EXPERT VOCAB' : 'PART 2: BASIC VOCAB'}
               </span>
-              <span className="text-slate-500">
+              <span className="text-slate-300 font-semibold">
                 PROGRESS: {Math.floor(currentQuestionIndex / 2) + 1} / {Object.keys(DINOSAURS).length} (Q{currentQuestionIndex + 1}/{QUESTIONS.length})
               </span>
             </div>
 
             {/* Question Text with customized Ruby formatting */}
-            <div className="bg-slate-950/80 rounded-lg p-4 border border-emerald-950/70 shadow-inner">
-              <h3 className="text-base sm:text-lg text-slate-100 font-medium leading-relaxed font-sans">
+            <div className="bg-slate-950/90 rounded-lg p-4 border border-emerald-950/80 shadow-inner">
+              <h3 className="text-base sm:text-lg text-white font-semibold leading-relaxed font-sans">
                 {currentQuestion.japaneseSegments.map((segment, idx) => (
                   segment.ruby ? (
                     <ruby key={idx} className={
                       currentQuestion.era === 'Triassic' ? 'rt-cyan' : currentQuestion.era === 'Jurassic' ? 'rt-green' : 'rt-amber'
                     }>
                       {segment.text}
-                      <rt>{segment.ruby}</rt>
+                      <rt className="text-emerald-300 font-bold">{segment.ruby}</rt>
                     </ruby>
                   ) : (
                     <span key={idx}>{segment.text}</span>
@@ -1150,11 +1153,11 @@ export default function App() {
 
             {/* Hint Box (if they fail) */}
             {attempts > 0 && !isCorrect && (
-              <div className="bg-amber-950/10 border border-amber-500/20 rounded p-3 text-xs flex items-start gap-2 animate-pulse text-amber-300">
-                <AlertCircle className="w-4 h-4 text-amber-500 flex-shrink-0 mt-0.5" />
+              <div className="bg-amber-950/20 border border-amber-500/40 rounded p-3 text-xs flex items-start gap-2 animate-pulse text-amber-200">
+                <AlertCircle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
                 <div>
-                  <p className="font-bold">探索ヒント発動（たんさひんとはつどう）:</p>
-                  <p className="font-sans">解き明かす言葉は 「{currentQuestion.keywordHintJa}」 だよ。もう一度よく選択肢（せんたくし）を見てみよう！</p>
+                  <p className="font-bold text-amber-300">探索ヒント発動（たんさひんとはつどう）:</p>
+                  <p className="font-sans text-slate-100">解き明かす言葉は 「{currentQuestion.keywordHintJa}」 だよ。もう一度よく選択肢（せんたくし）を見てみよう！</p>
                 </div>
               </div>
             )}
@@ -1165,18 +1168,18 @@ export default function App() {
                 const isSelected = selectedOptionIndex === index;
                 const isCorrectOption = index === currentQuestion.correctIndex;
                 
-                let btnStyle = 'border-emerald-950 bg-slate-900/60 text-slate-200 hover:border-emerald-500/50 hover:bg-slate-900/90 hover:shadow-[0_0_12px_rgba(16,185,129,0.15)]';
+                let btnStyle = 'border-emerald-950 bg-slate-900/80 text-white hover:border-emerald-500/60 hover:bg-slate-900 hover:shadow-[0_0_12px_rgba(16,185,129,0.2)]';
                 
                 if (selectedOptionIndex !== null) {
                   if (isSelected) {
                     btnStyle = isCorrectOption 
-                      ? 'border-emerald-500 bg-emerald-950/40 text-emerald-300 glow-green' 
-                      : 'border-red-500 bg-red-950/40 text-red-300 shadow-[0_0_15px_rgba(239,68,68,0.25)]';
+                      ? 'border-emerald-500 bg-emerald-950/60 text-emerald-200 glow-green' 
+                      : 'border-red-500 bg-red-950/60 text-red-200 shadow-[0_0_15px_rgba(239,68,68,0.25)]';
                   } else if (isCorrectOption && isCorrect === false) {
                     // Highlight correct answer if they failed
-                    btnStyle = 'border-emerald-500/60 bg-emerald-950/20 text-emerald-400';
+                    btnStyle = 'border-emerald-500/80 bg-emerald-950/40 text-emerald-300';
                   } else {
-                    btnStyle = 'border-slate-950 bg-slate-950/60 text-slate-600 opacity-50 cursor-not-allowed';
+                    btnStyle = 'border-slate-950 bg-slate-950/80 text-slate-400 opacity-60 cursor-not-allowed';
                   }
                 }
 
@@ -1189,19 +1192,23 @@ export default function App() {
                     id={`quiz-option-${index}`}
                   >
                     <div className="flex items-center justify-between w-full">
-                      <span className="text-xs font-mono font-bold tracking-widest text-slate-500 uppercase">
+                      <span className="text-xs font-mono font-bold tracking-widest text-slate-300 uppercase">
                         OPTION 0{index + 1}
                       </span>
                       {selectedOptionIndex !== null && isCorrectOption && (
-                        <span className="text-[10px] font-mono bg-emerald-950 text-emerald-400 border border-emerald-500/30 px-1 py-0.5 rounded">CORRECT</span>
+                        <span className="text-[10px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-500/40 px-1 py-0.5 rounded font-bold">CORRECT</span>
                       )}
                     </div>
-                    <span className="text-sm sm:text-base font-bold tracking-wide font-mono text-emerald-300">
-                      {option.text}
-                    </span>
-                    <span className="text-[11px] text-slate-400 font-sans">
-                      {PRONUNCIATION_MAP[option.text] || ''}
-                    </span>
+                    <div className="flex flex-col gap-1">
+                      <span className="text-sm sm:text-base font-bold tracking-wide font-mono text-emerald-300">
+                        {option.text}
+                      </span>
+                      {getPronunciation(option.text) && (
+                        <span className="text-sm sm:text-base font-bold font-mono text-emerald-400">
+                          {getPronunciation(option.text)}
+                        </span>
+                      )}
+                    </div>
                   </button>
                 );
               })}
@@ -1321,224 +1328,7 @@ export default function App() {
 
         </section>
 
-        {/* ==========================================
-            RIGHT COLUMN (SIDEBAR: ERA INFO & STATISTICS)
-            ========================================== */}
-        <aside className="flex flex-col gap-6 lg:col-span-1" id="sidebar-panel">
-          
-          {/* Unlocked Geological Database */}
-          <div className="bg-[#090f18] rounded-xl border border-emerald-950 overflow-hidden shadow-2xl">
-            <div className="border-b border-emerald-950/60 px-4 py-2 bg-slate-900/40 flex items-center gap-1.5 text-xs font-mono text-amber-500">
-              <Calendar className="w-4 h-4" />
-              <span>GEOLOGICAL ERA MANUAL</span>
-            </div>
-            
-            <div className="p-4 flex flex-col gap-4">
-              <p className="text-[11px] text-slate-400 font-sans">
-                クイズに正解して時代を進むと、その時代の地球環境のデータがアンロックされます。
-              </p>
-
-              <div className="flex flex-col gap-3">
-                {(['Triassic', 'Jurassic', 'Cretaceous'] as const).map((eraName) => {
-                  const isUnlocked = unlockedEras.includes(eraName);
-                  const data = ERA_DATA[eraName];
-                  
-                  return (
-                    <div 
-                      key={eraName}
-                      className={`p-3 rounded border transition-all duration-300 ${
-                        isUnlocked 
-                          ? 'border-slate-800 bg-slate-900/30' 
-                          : 'border-slate-950 bg-slate-950/80 opacity-50'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between mb-1">
-                        <h4 className="text-xs font-mono font-bold text-slate-200">
-                          {data.titleEn} ( {data.titleJa} )
-                        </h4>
-                        {!isUnlocked ? (
-                          <span className="text-[9px] font-mono text-red-400 bg-red-950/30 border border-red-500/20 px-1 py-0.5 rounded">LOCKED</span>
-                        ) : (
-                          <span className="text-[9px] font-mono text-emerald-400 bg-emerald-950/30 border border-emerald-500/20 px-1 py-0.5 rounded">DECRYPTED</span>
-                        )}
-                      </div>
-                      
-                      {isUnlocked ? (
-                        <div className="flex flex-col gap-1.5 font-sans">
-                          <span className="text-[10px] text-emerald-500/80 font-mono">{data.span}</span>
-                          <p className="text-xs text-slate-300 leading-relaxed font-sans mt-0.5">
-                            {data.descJa}
-                          </p>
-                          <p className="text-[10px] text-slate-400 leading-relaxed italic border-t border-slate-800/40 pt-1 mt-1 font-mono">
-                            {data.descEn}
-                          </p>
-                        </div>
-                      ) : (
-                        <div className="flex items-center gap-1.5 text-slate-500 py-1">
-                          <Lock className="w-3.5 h-3.5" />
-                          <span className="text-xs font-mono">ENCRYPTED_ARCHIVE_DATA</span>
-                        </div>
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-
-          {/* Research Telemetry Dashboard */}
-          <div className="bg-[#090f18] rounded-xl border border-emerald-950 overflow-hidden shadow-2xl p-4 flex flex-col gap-3.5">
-            <div className="border-b border-emerald-950/60 pb-2 flex items-center gap-1.5 text-xs font-mono text-cyan-400">
-              <Award className="w-4 h-4" />
-              <span>RESEARCH DIAGNOSTICS</span>
-            </div>
-
-            <div className="grid grid-cols-2 gap-3 font-mono">
-              <div className="bg-slate-950/60 border border-emerald-950/40 p-2.5 rounded flex flex-col gap-0.5 text-center">
-                <span className="text-[10px] text-slate-500">DECRYPTED_CARDS</span>
-                <span className="text-lg font-bold text-emerald-400">{unlockedDinoIds.length} / 50</span>
-              </div>
-              <div className="bg-slate-950/60 border border-emerald-950/40 p-2.5 rounded flex flex-col gap-0.5 text-center">
-                <span className="text-[10px] text-slate-500">DECRYPT_RATE</span>
-                <span className="text-lg font-bold text-cyan-400">{progressPercent}%</span>
-              </div>
-            </div>
-
-            {/* Unlocked Vocabulary Words List */}
-            <div className="border-t border-emerald-950/50 pt-3">
-              <span className="text-[10px] font-mono text-slate-400 tracking-wider block mb-2 uppercase">
-                DECRYPTED DICTIONARY / <ruby>解除された単語<rt>かいじょされたたんご</rt></ruby>
-              </span>
-              
-              {unlockedDinoIds.length === 0 ? (
-                <div className="bg-slate-950/40 rounded p-4 text-center border border-dashed border-emerald-950/50 text-xs text-slate-500 font-mono">
-                  NO_KEYWORDS_DECRYPTED
-                </div>
-              ) : (
-                <div className="flex flex-wrap gap-1.5 max-h-[140px] overflow-y-auto pr-1">
-                  {unlockedDinoIds.map((id) => {
-                    const q = QUESTIONS.find(qi => qi.dinoId === id);
-                    if (!q) return null;
-                    return (
-                      <button
-                        key={id}
-                        onClick={() => {
-                          AudioSynth.playSelect();
-                          // Find dinosaur matching id and show details
-                          setActiveDinoDetails(DINOSAURS[id]);
-                        }}
-                        className="px-2 py-1 text-[11px] font-mono font-bold rounded border border-emerald-500/20 bg-emerald-950/10 text-emerald-400 hover:bg-emerald-500/10 flex items-center gap-1 transition-all"
-                        id={`vocab-${id}`}
-                      >
-                        <Sparkles className="w-2.5 h-2.5" />
-                        {q.keyword}
-                      </button>
-                    );
-                  })}
-                </div>
-              )}
-            </div>
-          </div>
-
-        </aside>
       </main>
-
-      {/* ==========================================
-          BOTTOM ROW (MY SPECIMEN ENCYCLOPEDIA SHELF)
-          ========================================== */}
-      <section className="bg-[#080d15] border-t border-emerald-950 py-5 px-4 sm:px-6 z-20 shadow-[0_-10px_25px_rgba(0,0,0,0.6)]">
-        <div className="max-w-7xl mx-auto flex flex-col gap-4">
-          
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-emerald-950/40 pb-2">
-            <div className="flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-emerald-400" />
-              <h2 className="text-sm font-mono font-bold tracking-widest text-emerald-400 flex items-center gap-1.5 uppercase">
-                Dinosaur Specimen Vault <span className="text-[10px] bg-slate-900 border border-slate-800 text-slate-400 px-1.5 py-0.5 rounded">マイ図鑑</span>
-              </h2>
-            </div>
-            <span className="text-xs text-slate-400 font-sans">
-              クイズに正解して、全50種の古生物データカードをコレクションしよう！
-            </span>
-          </div>
-
-          {/* Cards Grid */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3.5">
-            {Object.keys(DINOSAURS).map((key, index) => {
-              const dino = DINOSAURS[key];
-              const isUnlocked = unlockedDinoIds.includes(key);
-              
-              // Color settings depending on geological era
-              const eraColor = dino.era === 'Triassic' ? 'cyan' : dino.era === 'Jurassic' ? 'emerald' : 'amber';
-              
-              const borderClass = isUnlocked
-                ? (eraColor === 'cyan' ? 'border-cyan-500 bg-cyan-950/10 hover:bg-cyan-950/20' : eraColor === 'emerald' ? 'border-emerald-500 bg-emerald-950/10 hover:bg-emerald-950/20' : 'border-amber-500 bg-amber-950/10 hover:bg-amber-950/20')
-                : 'border-slate-900 bg-slate-950/40 opacity-70';
-
-              const badgeColor = eraColor === 'cyan' ? 'text-cyan-400 bg-cyan-950/50' : eraColor === 'emerald' ? 'text-emerald-400 bg-emerald-950/50' : 'text-amber-400 bg-amber-950/50';
-
-              return (
-                <div
-                  key={key}
-                  onClick={() => {
-                    if (isUnlocked) {
-                      AudioSynth.playSelect();
-                      setActiveDinoDetails(dino);
-                    } else {
-                      AudioSynth.playBeep(200, 0.1, 'sawtooth'); // Lock error feedback
-                    }
-                  }}
-                  className={`border rounded-lg p-3 transition-all duration-300 flex flex-col items-center justify-between text-center select-none ${borderClass} ${
-                    isUnlocked ? 'cursor-pointer hover:scale-105 active:scale-95' : 'cursor-not-allowed'
-                  }`}
-                  style={{ boxShadow: isUnlocked ? `0 0 10px rgba(${eraColor === 'cyan' ? '6,182,212' : eraColor === 'emerald' ? '16,185,129' : '245,158,11'},0.1)` : 'none' }}
-                  id={`shelf-card-${key}`}
-                >
-                  <div className="flex items-center justify-between w-full mb-2">
-                    <span className="text-[9px] font-mono text-slate-500">SPECIMEN_0{index + 1}</span>
-                    {isUnlocked ? (
-                      <span className={`text-[8px] font-mono px-1 py-0.5 rounded font-bold uppercase tracking-wider ${badgeColor}`}>
-                        {dino.era}
-                      </span>
-                    ) : (
-                      <Lock className="w-2.5 h-2.5 text-slate-700" />
-                    )}
-                  </div>
-
-                  {/* Wireframe Silhouette thumbnail */}
-                  <div className="w-16 h-16 sm:w-20 sm:h-20 flex items-center justify-center my-1 bg-slate-950/50 rounded border border-slate-900/30 overflow-hidden relative">
-                    {isUnlocked ? (
-                      <div className="scale-125">
-                        <DinoHoloBlueprint dinoId={key} era={dino.era} />
-                      </div>
-                    ) : (
-                      <div className="text-slate-800 font-mono text-lg font-bold">???</div>
-                    )}
-                  </div>
-
-                  <div className="mt-2 w-full">
-                    {isUnlocked ? (
-                      <>
-                        <h4 className="text-xs sm:text-sm font-bold text-slate-100 truncate tracking-wide font-sans">
-                          {dino.nameJa}
-                        </h4>
-                        <p className="text-[9px] font-mono text-slate-400 truncate tracking-tight uppercase">
-                          {dino.nameEn}
-                        </p>
-                      </>
-                    ) : (
-                      <>
-                        <h4 className="text-xs sm:text-sm font-bold text-slate-700 font-sans">???</h4>
-                        <p className="text-[9px] font-mono text-slate-800">ENCRYPTED</p>
-                      </>
-                    )}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-        </div>
-      </section>
 
       {/* FOOTER */}
       <footer className="border-t border-emerald-950/60 bg-[#060a10] py-4 text-center text-xs font-mono text-slate-500 mt-auto select-none">
@@ -1764,13 +1554,15 @@ export default function App() {
                           <span className="text-cyan-400 group-hover:scale-110 transition-transform">🔊</span>
                         </div>
 
-                        <div className="flex items-baseline justify-between gap-2">
+                        <div className="flex flex-col gap-1">
                           <span className="text-base font-mono font-bold text-emerald-300 tracking-wide">
                             {wordObj.text}
                           </span>
-                          <span className="text-xs font-mono text-slate-400">
-                            {PRONUNCIATION_MAP[wordObj.text] || ''}
-                          </span>
+                          {getPronunciation(wordObj.text) && (
+                            <span className="text-base font-mono font-bold text-emerald-400">
+                              {getPronunciation(wordObj.text)}
+                            </span>
+                          )}
                         </div>
 
                         <span className="text-xs text-slate-200 font-sans font-medium border-t border-slate-900 pt-1">
