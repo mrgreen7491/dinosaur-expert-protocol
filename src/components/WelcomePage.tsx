@@ -1,8 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
 import { Play, Sparkles, Volume2, ShieldAlert, ChevronRight, Compass } from 'lucide-react';
 
 interface WelcomePageProps {
-  onEnter: () => void6600
+  onEnter: () => void;
+}
+
 interface SubtitleLine {
   start: number;
   end: number;
@@ -14,7 +15,7 @@ const SUBTITLES: SubtitleLine[] = [
   { start: 0.0, end: 3.5, en: "Welcome... to the Dino World!", ja: "恐竜の世界へ、ようこそ。" },
   { start: 3.5, end: 9.0, en: "Over the 230 to 66 million years, they ruled the Earth.", ja: "2億3000万年から6600万年にわたり、彼らは地球を支配していた。" },
   { start: 9.0, end: 11.0, en: "Now, the gates are open.", ja: "今、その扉が開く。" },
-  { start: 11.0, end: 14.0, en: "Are you ready to face the giants?", ja: "巨獣（きょじゅう）たちに立ち向かう準備はいいかな？" },
+  { start: 11.0, end: 14.0, en: "Are you ready to face the giants?", ja: "巨獣（きょじゅう）たちに立ち向かう準備はいいか？" },
   { start: 14.0, end: 18.0, en: "Your ultimate adventure begins now!", ja: "究極（きゅうきょく）の冒険が、ここから始まる。" }
 ];
 
