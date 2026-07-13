@@ -752,23 +752,23 @@ function DinoHoloBlueprint({ dinoId, era }: { dinoId: string; era: 'Triassic' | 
       <div className="absolute inset-0 terminal-grid opacity-40 pointer-events-none" />
 
       {/* Cyber Reticles */}
-      <div className="absolute top-2 left-2 text-[8px] font-mono text-emerald-500/60 flex flex-col gap-0.5 z-20">
+      <div className="absolute top-2 left-2 text-[8px] font-mono text-emerald-300 font-bold bg-slate-950/90 px-1.5 py-1 rounded border border-emerald-500/40 flex flex-col gap-0.5 z-20">
         <span>SYS.SCAN_ACTIVE: TRUE</span>
         <span>RESOLUTION: 1024_PX</span>
         <span>SPECIMEN_ID: {dinoId.toUpperCase()}</span>
       </div>
 
-      <div className="absolute bottom-2 right-2 text-[8px] font-mono text-emerald-500/60 flex items-center gap-1.5 z-20">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" style={{ backgroundColor: themeColor }} />
+      <div className="absolute bottom-2 right-2 text-[8px] font-mono text-emerald-300 font-bold bg-slate-950/90 px-2 py-1 rounded border border-emerald-500/40 flex items-center gap-1.5 z-20">
+        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" style={{ backgroundColor: themeColor }} />
         <span>DIAGNOSTIC_FEED: ONLINE</span>
       </div>
 
       {!imageError ? (
-        <div className="relative z-10 w-full h-full flex items-center justify-center p-2">
+        <div className="relative z-10 w-full h-full flex items-center justify-center p-3">
           <img
             src={`images/${dinoId.toLowerCase()}${formats[imageFormatIndex]}`}
             alt={dinoId}
-            className="max-h-[300px] sm:max-h-[380px] scale-125 sm:scale-150 object-contain drop-shadow-[0_0_25px_rgba(16,185,129,0.5)] filter contrast-125 brightness-110 transition-all duration-300"
+            className="max-h-[260px] sm:max-h-[340px] max-w-full w-auto h-auto object-contain drop-shadow-[0_0_25px_rgba(16,185,129,0.5)] filter contrast-125 brightness-110 transition-all duration-300"
             onError={() => {
               if (imageFormatIndex < formats.length - 1) {
                 setImageFormatIndex(imageFormatIndex + 1);
