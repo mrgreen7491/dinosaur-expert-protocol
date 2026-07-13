@@ -321,12 +321,12 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
 
               <div className="flex flex-col gap-2">
                 <span className="text-xs font-mono text-emerald-400 tracking-widest uppercase">
-                  CINEMATIC PRE-RENDER IN PROGRESS [{currentTime.toFixed(1)}s / 16.5s]
+                  CINEMATIC PRE-RENDER IN PROGRESS [{currentTime.toFixed(1)}s / 18.0s]
                 </span>
                 <div className="w-48 h-1.5 bg-slate-800 rounded-full mx-auto overflow-hidden">
                   <div 
                     className="h-full bg-emerald-400 transition-all duration-100"
-                    style={{ width: `${Math.min(100, (currentTime / 16.5) * 100)}%` }}
+                    style={{ width: `${Math.min(100, (currentTime / 18.0) * 100)}%` }}
                   />
                 </div>
               </div>
