@@ -13,11 +13,11 @@ interface SubtitleLine {
 }
 
 const SUBTITLES: SubtitleLine[] = [
-  { start: 0.0, end: 3.5, en: "Welcome... to the Dino World.", ja: "ディノ・ワールドへ、ようこそ。" },
-  { start: 3.5, end: 7.5, en: "Sixty-six million years ago, they ruled the Earth.", ja: "6600万年前、彼らは地球の支配者だった。" },
-  { start: 7.5, end: 10.0, en: "Now, the gates are open.", ja: "今、その扉が開く。" },
-  { start: 10.0, end: 13.0, en: "Are you ready to face the giants?", ja: "巨獣（きょじゅう）たちに立ち向かう準備はいいか？" },
-  { start: 13.0, end: 16.5, en: "Your ultimate adventure begins now!", ja: "究極（きゅうきょく）の冒険が、ここから始まる！" }
+ { start: 0.0, end: 3.5, en: "Welcome... to the Dino World!", ja: "恐竜の世界へ、ようこそ。" },
+  { start: 3.5, end: 9.0, en: "Over the 230 to 66 million years, they ruled the Earth.", ja: "2億3000万年から6600万年にわたり、彼らは地球を支配していた。" },
+  { start: 9.0, end: 11.0, en: "Now, the gates are open.", ja: "今、その扉が開く。" },
+  { start: 11.0, end: 14.0, en: "Are you ready to face the giants?", ja: "巨獣（きょじゅう）たちに立ち向かう準備はいいか？" },
+  { start: 14.0, end: 18.0, en: "Your ultimate adventure begins now!", ja: "究極（きゅうきょく）の冒険が、ここから始まる。" }
 ];
 
 const POPULAR_DINOS = [
