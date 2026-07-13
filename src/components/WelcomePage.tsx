@@ -13,12 +13,11 @@ interface SubtitleLine {
 }
 
 const SUBTITLES: SubtitleLine[] = [
- { start: 0.0, end: 3.5, en: "Welcome... to the Dino World.", ja: "ディノ・ワールドへ、ようこそ。" },
-  { start: 3.5, end: 7.0, en: "From 230 to 66 million years ago,", ja: "2億3000万年前から6600万年前まで、" },
-  { start: 7.0, end: 8.5, en: "they ruled the Earth.", ja: "彼らは地球の支配者だった。" },
-  { start: 8.5, end: 11.0, en: "Now, the gates are open.", ja: "今、その扉が開く。" },
-  { start: 11.0, end: 14.0, en: "Are you ready to face the giants?", ja: "巨獣（きょじゅう）たちに立ち向かう準備はいいか？" },
-  { start: 14.0, end: 18.5, en: "Your ultimate adventure begins now!", ja: "究極（きゅうきょく）の冒険が、ここから始まる" }
+  { start: 0.0, end: 3.5, en: "Welcome... to the Dino World.", ja: "ディノ・ワールドへ、ようこそ。" },
+  { start: 3.5, end: 7.5, en: "Sixty-six million years ago, they ruled the Earth.", ja: "6600万年前、彼らは地球の支配者だった。" },
+  { start: 7.5, end: 10.0, en: "Now, the gates are open.", ja: "今、その扉が開く。" },
+  { start: 10.0, end: 13.0, en: "Are you ready to face the giants?", ja: "巨獣（きょじゅう）たちに立ち向かう準備はいいか？" },
+  { start: 13.0, end: 16.5, en: "Your ultimate adventure begins now!", ja: "究極（きゅうきょく）の冒険が、ここから始まる！" }
 ];
 
 const POPULAR_DINOS = [
@@ -158,7 +157,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
         }
       }
 
-      if (elapsed >= 18.0) {
+      if (elapsed >= 16.5) {
         if (timerRef.current) clearInterval(timerRef.current);
         handleTriggerExit();
       }
@@ -255,7 +254,7 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
                 DINO <span className="text-emerald-400">WORLD</span>
               </h1>
               <p className="text-sm sm:text-base text-slate-300 font-sans max-w-xl mx-auto leading-relaxed">
-                2億3000万年前から6600万年前まで、地球を支配した恐竜たち。その知られざる秘密が今、解き明かされる。究極の英語＆恐竜・爬虫類アドベンチャーへようこそ。
+                6600万年の時を越え、恐竜たちの秘密が今、解き明かされる。究極の英語＆古生物学アドベンチャーへようこそ。
               </p>
             </div>
 
@@ -278,8 +277,8 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
                     />
                   </div>
                   <div className="flex flex-col items-center">
-                    <span className="text-xs font-mono font-bold text-slate-200">{dino.nameJa}</span>
-                    <span className="text-[10px] font-mono text-slate-400">{dino.nameEn}</span>
+                    <span className="text-xs font-mono font-bold text-slate-100">{dino.nameJa}</span>
+                    <span className="text-[10px] font-mono text-slate-300">{dino.nameEn}</span>
                   </div>
                 </div>
               ))}
@@ -322,12 +321,12 @@ export const WelcomePage: React.FC<WelcomePageProps> = ({ onEnter }) => {
 
               <div className="flex flex-col gap-2">
                 <span className="text-xs font-mono text-emerald-400 tracking-widest uppercase">
-                  CINEMATIC PRE-RENDER IN PROGRESS [{currentTime.toFixed(1)}s / 18.0s]
+                  CINEMATIC PRE-RENDER IN PROGRESS [{currentTime.toFixed(1)}s / 16.5s]
                 </span>
                 <div className="w-48 h-1.5 bg-slate-800 rounded-full mx-auto overflow-hidden">
                   <div 
                     className="h-full bg-emerald-400 transition-all duration-100"
-                    style={{ width: `${Math.min(100, (currentTime / 18.0) * 100)}%` }}
+                    style={{ width: `${Math.min(100, (currentTime / 16.5) * 100)}%` }}
                   />
                 </div>
               </div>
