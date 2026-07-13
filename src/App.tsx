@@ -1071,13 +1071,13 @@ export default function App() {
         <section className="lg:col-span-2 flex flex-col gap-6" id="main-terminal-area">
           
           {/* Holographic Diagnostic Viewport */}
-          <div className="bg-[#12223a] rounded-xl border border-emerald-500/80 overflow-hidden shadow-2xl">
-            <div className="border-b border-emerald-500/40 px-4 py-2.5 bg-[#172b4d] flex items-center justify-between text-xs font-mono">
-              <span className="text-emerald-300 font-bold flex items-center gap-1.5">
+          <div className="bg-slate-950/90 rounded-xl border border-emerald-500/80 overflow-hidden shadow-2xl backdrop-blur-md">
+            <div className="border-b border-emerald-500/80 px-4 py-2.5 bg-slate-900/90 flex items-center justify-between text-xs font-mono">
+              <span className="text-emerald-300 font-bold flex items-center gap-1.5 drop-shadow-sm">
                 <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 DINO SCANNER: SPECIMEN_{currentDino.nameEn.toUpperCase()}
               </span>
-              <span className="text-white font-bold">
+              <span className="text-white font-bold drop-shadow-sm">
                 ERA: {currentDino.era.toUpperCase()}
               </span>
             </div>
@@ -1090,28 +1090,28 @@ export default function App() {
               
               {/* Telemetry data tags */}
               <div className="sm:col-span-3 flex flex-col gap-3 font-mono text-xs">
-                <div className="bg-[#182e52] rounded border border-emerald-500/60 p-3.5 flex flex-col gap-2 shadow-lg">
-                  <div className="flex justify-between border-b border-emerald-500/30 pb-1.5">
-                    <span className="text-white font-bold">GENUS / <ruby>学名<rt>がくめい</rt></ruby></span>
-                    <span className="text-emerald-300 font-bold italic">{currentDino.scientificName}</span>
+                <div className="bg-slate-950/90 rounded border border-emerald-500/80 p-3.5 flex flex-col gap-2 shadow-lg">
+                  <div className="flex justify-between border-b border-emerald-500/40 pb-1.5">
+                    <span className="text-white font-bold drop-shadow-sm">GENUS / <ruby>学名<rt>がくめい</rt></ruby></span>
+                    <span className="text-emerald-300 font-bold italic drop-shadow-sm">{currentDino.scientificName}</span>
                   </div>
-                  <div className="flex justify-between border-b border-emerald-500/30 pb-1.5">
-                    <span className="text-white font-bold">DIET / <ruby>食性<rt>しょくせい</rt></ruby></span>
-                    <span className={`font-bold ${
+                  <div className="flex justify-between border-b border-emerald-500/40 pb-1.5">
+                    <span className="text-white font-bold drop-shadow-sm">DIET / <ruby>食性<rt>しょくせい</rt></ruby></span>
+                    <span className={`font-bold drop-shadow-sm ${
                       currentDino.diet === 'Carnivore' ? 'text-red-300' : currentDino.diet === 'Herbivore' ? 'text-emerald-300' : 'text-cyan-300'
                     }`}>
                       {currentDino.diet === 'Carnivore' ? 'Carnivore (肉食)' : currentDino.diet === 'Herbivore' ? 'Herbivore (草食)' : 'Piscivore (魚食/魚主食)'}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-white font-bold">LENGTH / <ruby>全長<rt>ぜんちょう</rt></ruby></span>
-                    <span className="text-cyan-300 font-bold">{currentDino.length}</span>
+                    <span className="text-white font-bold drop-shadow-sm">LENGTH / <ruby>全長<rt>ぜんちょう</rt></ruby></span>
+                    <span className="text-cyan-300 font-bold drop-shadow-sm">{currentDino.length}</span>
                   </div>
                 </div>
 
-                <div className="bg-emerald-950/80 rounded border border-emerald-500/70 p-3 flex items-start gap-2 shadow-lg">
+                <div className="bg-slate-950/90 rounded border border-emerald-500/80 p-3 flex items-start gap-2 shadow-lg">
                   <Info className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-xs text-slate-100 font-medium leading-relaxed font-sans">
+                  <p className="text-xs text-slate-100 font-medium leading-relaxed font-sans drop-shadow-sm">
                     <strong>システムログ:</strong> この恐竜のデータを解読中。英語クイズに正解して、暗号化されたスペルと鳴き声コードを解除し、図鑑（コレクション）をアップグレードしてください。
                   </p>
                 </div>
@@ -1120,22 +1120,22 @@ export default function App() {
           </div>
 
           {/* Core Interactive Quiz Terminal */}
-          <div className="bg-[#12223a] rounded-xl border border-emerald-500/80 overflow-hidden shadow-2xl p-4 sm:p-6 flex flex-col gap-4">
+          <div className="bg-slate-950/90 rounded-xl border border-emerald-500/80 overflow-hidden shadow-2xl p-4 sm:p-6 flex flex-col gap-4 backdrop-blur-md">
             
             {/* Header / ID Info */}
-            <div className="flex justify-between items-center text-xs font-mono border-b border-emerald-500/40 pb-3">
-              <span className="text-amber-300 font-bold flex items-center gap-1.5">
+            <div className="flex justify-between items-center text-xs font-mono border-b border-emerald-500/80 pb-3">
+              <span className="text-amber-300 font-bold flex items-center gap-1.5 drop-shadow-sm">
                 <span className="w-2 h-2 bg-amber-400 rounded-full animate-ping" />
                 DECRYPTION PROTOCOL: {currentDino.nameEn.toUpperCase()} — {currentQuestionIndex % 2 === 0 ? 'PART 1: EXPERT VOCAB' : 'PART 2: BASIC VOCAB'}
               </span>
-              <span className="text-white font-bold">
+              <span className="text-white font-bold drop-shadow-sm">
                 PROGRESS: {Math.floor(currentQuestionIndex / 2) + 1} / {Object.keys(DINOSAURS).length} (Q{currentQuestionIndex + 1}/{QUESTIONS.length})
               </span>
             </div>
 
             {/* Question Text with customized Ruby formatting */}
-            <div className="bg-[#182e52] rounded-lg p-4 border border-emerald-500/60 shadow-inner">
-              <h3 className="text-base sm:text-lg text-white font-bold leading-relaxed font-sans">
+            <div className="bg-slate-950/90 rounded-lg p-4 border border-emerald-500/80 shadow-inner">
+              <h3 className="text-base sm:text-lg text-white font-bold leading-relaxed font-sans drop-shadow-sm">
                 {currentQuestion.japaneseSegments.map((segment, idx) => (
                   segment.ruby ? (
                     <ruby key={idx} className={
@@ -1153,11 +1153,11 @@ export default function App() {
 
             {/* Hint Box (if they fail) */}
             {attempts > 0 && !isCorrect && (
-              <div className="bg-amber-950/20 border border-amber-500/40 rounded p-3 text-xs flex items-start gap-2 animate-pulse text-amber-200">
+              <div className="bg-slate-950/90 border border-amber-500/80 rounded p-3 text-xs flex items-start gap-2 animate-pulse text-amber-200">
                 <AlertCircle className="w-4 h-4 text-amber-400 flex-shrink-0 mt-0.5" />
                 <div>
                   <p className="font-bold text-amber-300">探索ヒント発動（たんさひんとはつどう）:</p>
-                  <p className="font-sans text-slate-100">解き明かす言葉は 「{currentQuestion.keywordHintJa}」 だよ。もう一度よく選択肢（せんたくし）を見てみよう！</p>
+                  <p className="font-sans text-white font-medium">解き明かす言葉は 「{currentQuestion.keywordHintJa}」 だよ。もう一度よく選択肢（せんたくし）を見てみよう！</p>
                 </div>
               </div>
             )}
@@ -1328,7 +1328,150 @@ export default function App() {
 
         </section>
 
+        {/* ==========================================
+            RIGHT COLUMN (GEOLOGICAL ERA INFORMATION)
+            ========================================== */}
+        <section className="flex flex-col gap-6" id="era-info-area">
+          <div className="bg-slate-950/90 rounded-xl border border-emerald-500/80 p-5 shadow-2xl backdrop-blur-md flex flex-col gap-4">
+            <div className="flex items-center justify-between border-b border-emerald-500/80 pb-3">
+              <span className="text-emerald-300 font-mono text-xs font-bold flex items-center gap-1.5 drop-shadow-sm">
+                <Clock className="w-4 h-4 text-emerald-400" />
+                GEOLOGICAL ERA / 地質時代情報
+              </span>
+              <span className="text-xs font-mono px-2 py-0.5 rounded bg-emerald-950/60 border border-emerald-500/50 text-emerald-300 font-bold">
+                {currentDino.era.toUpperCase()}
+              </span>
+            </div>
+
+            <div className="flex flex-col gap-2 font-sans">
+              <div className="flex items-baseline justify-between">
+                <h4 className="text-lg font-bold text-white font-mono tracking-wide drop-shadow-sm">
+                  {ERA_DATA[currentDino.era].titleJa}
+                </h4>
+                <span className="text-xs font-mono text-emerald-400">
+                  {ERA_DATA[currentDino.era].titleEn}
+                </span>
+              </div>
+              <p className="text-xs font-mono text-cyan-300 font-semibold">
+                ⏱ {ERA_DATA[currentDino.era].span}
+              </p>
+              <p className="text-xs text-slate-200 leading-relaxed mt-1 font-medium">
+                {ERA_DATA[currentDino.era].descJa}
+              </p>
+              <p className="text-[11px] text-slate-400 italic font-mono border-t border-emerald-950/40 pt-2 mt-1">
+                {ERA_DATA[currentDino.era].descEn}
+              </p>
+            </div>
+
+            {/* Era progress statistics */}
+            <div className="border-t border-emerald-500/30 pt-4 flex flex-col gap-2 font-mono text-xs">
+              <div className="flex justify-between text-slate-300">
+                <span>ERA SPECIMENS UNLOCKED:</span>
+                <span className="text-emerald-400 font-bold">
+                  {DINO_CHALLENGES.filter(c => c.era === currentDino.era && unlockedDinoIds.includes(c.id)).length} / {DINO_CHALLENGES.filter(c => c.era === currentDino.era).length}
+                </span>
+              </div>
+              <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-emerald-500/40">
+                <div 
+                  className="bg-emerald-400 h-full transition-all duration-500 shadow-[0_0_8px_#10b981]"
+                  style={{ 
+                    width: `${(DINO_CHALLENGES.filter(c => c.era === currentDino.era && unlockedDinoIds.includes(c.id)).length / DINO_CHALLENGES.filter(c => c.era === currentDino.era).length) * 100}%` 
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
       </main>
+
+      {/* ==========================================
+          SPECIMEN VAULT / COLLECTION AREA (BOTTOM)
+          ========================================== */}
+      <section className="max-w-7xl w-full mx-auto px-4 sm:px-6 py-6" id="specimen-vault-area">
+        <div className="bg-slate-950/90 rounded-xl border border-emerald-500/80 p-5 sm:p-6 shadow-2xl backdrop-blur-md flex flex-col gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between border-b border-emerald-500/80 pb-3 gap-2">
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-amber-400 animate-pulse" />
+              <h3 className="text-base sm:text-lg font-bold font-mono text-white tracking-wider flex items-center gap-2 drop-shadow-sm">
+                DINOSAUR SPECIMEN VAULT / 恐竜コレクション貯蔵庫
+              </h3>
+            </div>
+            <div className="flex items-center gap-3 font-mono text-xs">
+              <span className="text-emerald-300 font-bold bg-emerald-950/60 border border-emerald-500/40 px-3 py-1 rounded">
+                UNLOCKED: {unlockedDinoIds.length} / {DINO_CHALLENGES.length} SPECIES
+              </span>
+            </div>
+          </div>
+
+          <p className="text-xs text-slate-300 font-sans">
+            英語クイズをクリアしてすべての古代生物の暗号を解除し、高画質ホログラフィック・データカード（鳴き声・発音・3Dワイヤーフレーム）をコレクションしよう！
+          </p>
+
+          {/* Grid of Specimen Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 mt-2">
+            {DINO_CHALLENGES.map((challenge) => {
+              const isUnlocked = unlockedDinoIds.includes(challenge.id);
+              const isCurrent = currentQuestion.dinoId === challenge.id;
+
+              return (
+                <button
+                  key={challenge.id}
+                  onClick={() => {
+                    if (isUnlocked) {
+                      AudioSynth.playSelect();
+                      setActiveDinoDetails(DINOSAURS[challenge.id]);
+                    } else {
+                      AudioSynth.playBeep(300, 0.1, 'sawtooth', 0.05);
+                    }
+                  }}
+                  className={`p-3 rounded-lg border text-left transition-all duration-200 flex flex-col justify-between gap-2 relative overflow-hidden group ${
+                    isCurrent 
+                      ? 'border-emerald-400 bg-emerald-950/40 shadow-[0_0_15px_rgba(16,185,129,0.3)] ring-1 ring-emerald-400' 
+                      : isUnlocked 
+                        ? 'border-emerald-500/60 bg-slate-900/90 hover:border-emerald-400 hover:bg-slate-900 hover:scale-[1.02]' 
+                        : 'border-slate-800/80 bg-slate-950/60 opacity-60 cursor-pointer hover:border-slate-700'
+                  }`}
+                  id={`vault-card-${challenge.id}`}
+                >
+                  <div className="flex items-center justify-between w-full">
+                    <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded ${
+                      challenge.era === 'Triassic' ? 'bg-cyan-950 text-cyan-300 border border-cyan-500/40' :
+                      challenge.era === 'Jurassic' ? 'bg-emerald-950 text-emerald-300 border border-emerald-500/40' :
+                      'bg-amber-950 text-amber-300 border border-amber-500/40'
+                    }`}>
+                      {challenge.era.substring(0, 3).toUpperCase()}
+                    </span>
+                    {isUnlocked ? (
+                      <Unlock className="w-3.5 h-3.5 text-emerald-400" />
+                    ) : (
+                      <Lock className="w-3.5 h-3.5 text-slate-500" />
+                    )}
+                  </div>
+
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-xs sm:text-sm font-bold font-sans text-white group-hover:text-emerald-300 transition-colors truncate">
+                      {isUnlocked ? challenge.nameJa : '??????'}
+                    </span>
+                    <span className="text-[10px] font-mono text-slate-400 italic truncate">
+                      {isUnlocked ? challenge.scientificName : 'CLASSIFIED'}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center justify-between text-[10px] font-mono border-t border-slate-800/80 pt-1.5 mt-0.5">
+                    <span className={isUnlocked ? 'text-emerald-400 font-bold' : 'text-slate-500'}>
+                      {isUnlocked ? 'DECRYPTED' : 'LOCKED'}
+                    </span>
+                    {isUnlocked && (
+                      <span className="text-cyan-300 group-hover:translate-x-0.5 transition-transform">→</span>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </section>
 
       {/* FOOTER */}
       <footer className="border-t border-emerald-950/60 bg-[#060a10] py-4 text-center text-xs font-mono text-slate-500 mt-auto select-none">
