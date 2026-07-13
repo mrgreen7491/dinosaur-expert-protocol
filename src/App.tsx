@@ -744,31 +744,31 @@ function DinoHoloBlueprint({ dinoId, era }: { dinoId: string; era: 'Triassic' | 
   };
 
   return (
-    <div className="relative w-full h-full min-h-[180px] sm:min-h-[220px] bg-slate-950/80 rounded border border-emerald-500/20 crt-scanlines overflow-hidden flex items-center justify-center p-3">
+    <div className="relative w-full h-[240px] sm:h-[300px] bg-[#0b1322] rounded-xl border border-emerald-500/60 crt-scanlines overflow-hidden flex items-center justify-center p-3 shadow-2xl">
       {/* Absolute overlay scanning lasers */}
       <div className="absolute left-0 w-full h-[2px] bg-emerald-500/60 scanner-line shadow-[0_0_10px_#10b981]" style={{ boxShadow: `0 0 10px ${themeColor}` }} />
       
       {/* Background Matrix Grid */}
-      <div className="absolute inset-0 terminal-grid opacity-40 pointer-events-none" />
+      <div className="absolute inset-0 terminal-grid opacity-60 pointer-events-none" />
 
       {/* Cyber Reticles */}
-      <div className="absolute top-2 left-2 text-[8px] font-mono text-emerald-300 font-bold bg-slate-950/90 px-1.5 py-1 rounded border border-emerald-500/40 flex flex-col gap-0.5 z-20">
+      <div className="absolute top-2 left-2 text-[9px] font-mono text-emerald-300 font-bold bg-[#0d1626]/95 px-2 py-1 rounded border border-emerald-500/50 flex flex-col gap-0.5 z-20 shadow-md">
         <span>SYS.SCAN_ACTIVE: TRUE</span>
         <span>RESOLUTION: 1024_PX</span>
         <span>SPECIMEN_ID: {dinoId.toUpperCase()}</span>
       </div>
 
-      <div className="absolute bottom-2 right-2 text-[8px] font-mono text-emerald-300 font-bold bg-slate-950/90 px-2 py-1 rounded border border-emerald-500/40 flex items-center gap-1.5 z-20">
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" style={{ backgroundColor: themeColor }} />
+      <div className="absolute bottom-2 right-2 text-[9px] font-mono text-emerald-300 font-bold bg-[#0d1626]/95 px-2.5 py-1 rounded border border-emerald-500/50 flex items-center gap-1.5 z-20 shadow-md">
+        <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" style={{ backgroundColor: themeColor }} />
         <span>DIAGNOSTIC_FEED: ONLINE</span>
       </div>
 
       {!imageError ? (
-        <div className="relative z-10 w-full h-full flex items-center justify-center p-3">
+        <div className="relative z-10 w-full h-full flex items-center justify-center p-2">
           <img
             src={`images/${dinoId.toLowerCase()}${formats[imageFormatIndex]}`}
             alt={dinoId}
-            className="max-h-[260px] sm:max-h-[340px] max-w-full w-auto h-auto object-contain drop-shadow-[0_0_25px_rgba(16,185,129,0.5)] filter contrast-125 brightness-110 transition-all duration-300"
+            className="w-full h-full max-h-[200px] sm:max-h-[260px] object-contain drop-shadow-[0_0_25px_rgba(16,185,129,0.5)] filter contrast-125 brightness-110 transition-all duration-300"
             onError={() => {
               if (imageFormatIndex < formats.length - 1) {
                 setImageFormatIndex(imageFormatIndex + 1);
@@ -781,7 +781,7 @@ function DinoHoloBlueprint({ dinoId, era }: { dinoId: string; era: 'Triassic' | 
         </div>
       ) : (
         /* Actual SVG Graphic fallback */
-        <svg viewBox="0 0 300 300" className="w-full h-full max-h-[300px] sm:max-h-[380px] scale-125 z-10 drop-shadow-lg">
+        <svg viewBox="0 0 300 300" className="w-full h-full max-h-[220px] sm:max-h-[280px] object-contain z-10 drop-shadow-lg">
           {/* Hologram Circle Pedestal */}
           <ellipse cx="150" cy="265" rx="90" ry="15" fill="none" stroke={`${themeColor}33`} strokeWidth="1" strokeDasharray="3,3" />
           <ellipse cx="150" cy="265" rx="70" ry="10" fill="none" stroke={`${themeColor}55`} strokeWidth="1" />
@@ -921,7 +921,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=1600&auto=format&fit=crop')] bg-cover bg-center text-slate-100 font-sans relative crt-scanlines flex flex-col selection:bg-emerald-500 selection:text-black">
       {/* Background Prehistoric Overlay */}
-      <div className="absolute inset-0 bg-slate-950/85 pointer-events-none z-0" />
+      <div className="absolute inset-0 bg-[#070e1a]/70 pointer-events-none z-0" />
 
       {/* CRT Overlay flicker */}
       <div className="absolute inset-0 bg-[#06090e]/10 pointer-events-none z-50 crt-flicker" />
@@ -1071,13 +1071,13 @@ export default function App() {
         <section className="lg:col-span-2 flex flex-col gap-6" id="main-terminal-area">
           
           {/* Holographic Diagnostic Viewport */}
-          <div className="bg-[#090f18] rounded-xl border border-emerald-950 overflow-hidden shadow-2xl">
-            <div className="border-b border-emerald-950/60 px-4 py-2 bg-slate-900/40 flex items-center justify-between text-xs font-mono">
-              <span className="text-emerald-500 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+          <div className="bg-[#12223a] rounded-xl border border-emerald-500/80 overflow-hidden shadow-2xl">
+            <div className="border-b border-emerald-500/40 px-4 py-2.5 bg-[#172b4d] flex items-center justify-between text-xs font-mono">
+              <span className="text-emerald-300 font-bold flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                 DINO SCANNER: SPECIMEN_{currentDino.nameEn.toUpperCase()}
               </span>
-              <span className="text-slate-300 font-semibold">
+              <span className="text-white font-bold">
                 ERA: {currentDino.era.toUpperCase()}
               </span>
             </div>
@@ -1090,28 +1090,28 @@ export default function App() {
               
               {/* Telemetry data tags */}
               <div className="sm:col-span-3 flex flex-col gap-3 font-mono text-xs">
-                <div className="bg-slate-950/60 rounded border border-emerald-950/50 p-3 flex flex-col gap-1.5">
-                  <div className="flex justify-between border-b border-emerald-950/40 pb-1">
-                    <span className="text-slate-300 font-semibold">GENUS / <ruby>学名<rt>がくめい</rt></ruby></span>
+                <div className="bg-[#182e52] rounded border border-emerald-500/60 p-3.5 flex flex-col gap-2 shadow-lg">
+                  <div className="flex justify-between border-b border-emerald-500/30 pb-1.5">
+                    <span className="text-white font-bold">GENUS / <ruby>学名<rt>がくめい</rt></ruby></span>
                     <span className="text-emerald-300 font-bold italic">{currentDino.scientificName}</span>
                   </div>
-                  <div className="flex justify-between border-b border-emerald-950/40 pb-1">
-                    <span className="text-slate-300 font-semibold">DIET / <ruby>食性<rt>しょくせい</rt></ruby></span>
+                  <div className="flex justify-between border-b border-emerald-500/30 pb-1.5">
+                    <span className="text-white font-bold">DIET / <ruby>食性<rt>しょくせい</rt></ruby></span>
                     <span className={`font-bold ${
-                      currentDino.diet === 'Carnivore' ? 'text-red-400' : currentDino.diet === 'Herbivore' ? 'text-green-400' : 'text-blue-400'
+                      currentDino.diet === 'Carnivore' ? 'text-red-300' : currentDino.diet === 'Herbivore' ? 'text-emerald-300' : 'text-cyan-300'
                     }`}>
                       {currentDino.diet === 'Carnivore' ? 'Carnivore (肉食)' : currentDino.diet === 'Herbivore' ? 'Herbivore (草食)' : 'Piscivore (魚食/魚主食)'}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="text-slate-300 font-semibold">LENGTH / <ruby>全長<rt>ぜんちょう</rt></ruby></span>
+                    <span className="text-white font-bold">LENGTH / <ruby>全長<rt>ぜんちょう</rt></ruby></span>
                     <span className="text-cyan-300 font-bold">{currentDino.length}</span>
                   </div>
                 </div>
 
-                <div className="bg-emerald-950/20 rounded border border-emerald-500/20 p-2.5 flex items-start gap-2">
+                <div className="bg-emerald-950/80 rounded border border-emerald-500/70 p-3 flex items-start gap-2 shadow-lg">
                   <Info className="w-4 h-4 text-emerald-400 flex-shrink-0 mt-0.5" />
-                  <p className="text-[11px] text-slate-100 font-medium leading-relaxed font-sans">
+                  <p className="text-xs text-slate-100 font-medium leading-relaxed font-sans">
                     <strong>システムログ:</strong> この恐竜のデータを解読中。英語クイズに正解して、暗号化されたスペルと鳴き声コードを解除し、図鑑（コレクション）をアップグレードしてください。
                   </p>
                 </div>
@@ -1120,22 +1120,22 @@ export default function App() {
           </div>
 
           {/* Core Interactive Quiz Terminal */}
-          <div className="bg-[#090f18] rounded-xl border border-emerald-950 overflow-hidden shadow-2xl p-4 sm:p-6 flex flex-col gap-4">
+          <div className="bg-[#12223a] rounded-xl border border-emerald-500/80 overflow-hidden shadow-2xl p-4 sm:p-6 flex flex-col gap-4">
             
             {/* Header / ID Info */}
-            <div className="flex justify-between items-center text-xs font-mono border-b border-emerald-950/50 pb-3">
-              <span className="text-amber-400 font-bold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 bg-amber-400 rounded-full animate-ping" />
+            <div className="flex justify-between items-center text-xs font-mono border-b border-emerald-500/40 pb-3">
+              <span className="text-amber-300 font-bold flex items-center gap-1.5">
+                <span className="w-2 h-2 bg-amber-400 rounded-full animate-ping" />
                 DECRYPTION PROTOCOL: {currentDino.nameEn.toUpperCase()} — {currentQuestionIndex % 2 === 0 ? 'PART 1: EXPERT VOCAB' : 'PART 2: BASIC VOCAB'}
               </span>
-              <span className="text-slate-300 font-semibold">
+              <span className="text-white font-bold">
                 PROGRESS: {Math.floor(currentQuestionIndex / 2) + 1} / {Object.keys(DINOSAURS).length} (Q{currentQuestionIndex + 1}/{QUESTIONS.length})
               </span>
             </div>
 
             {/* Question Text with customized Ruby formatting */}
-            <div className="bg-slate-950/90 rounded-lg p-4 border border-emerald-950/80 shadow-inner">
-              <h3 className="text-base sm:text-lg text-white font-semibold leading-relaxed font-sans">
+            <div className="bg-[#182e52] rounded-lg p-4 border border-emerald-500/60 shadow-inner">
+              <h3 className="text-base sm:text-lg text-white font-bold leading-relaxed font-sans">
                 {currentQuestion.japaneseSegments.map((segment, idx) => (
                   segment.ruby ? (
                     <ruby key={idx} className={
