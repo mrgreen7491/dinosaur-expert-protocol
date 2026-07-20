@@ -1955,7 +1955,7 @@ export const PRONUNCIATION_DICT: Record<string, string> = {
   bone: "ボーン",
   ornithischian: "オルニティスキアン",
   big: "ビッグ",
-  ankylosaur: "アンキロサウルス",
+  ankylosaur: "アンキロソア",
   weak: "ウィーク",
   prey: "プレイ",
   scavenger: "スカベンジャー",
